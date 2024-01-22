@@ -45,7 +45,7 @@ proc  intersection[T](oa: openArray[T]; lowerBound, upperBound: T;
   **Assertions:**
     - `oa` is not empty
     - The elements of the `oa` openArray must be in strictly ascending order.
-    - `lowerBound` and `upperBound` must be in strictly ascending order.
+    - `lowerBound` and `upperBound` must be in ascending order.
   ]#
   # assertions
   assert:  oa.len != 0

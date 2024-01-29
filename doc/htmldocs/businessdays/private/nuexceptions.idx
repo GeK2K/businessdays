@@ -1,0 +1,3 @@
+nimTitle	nuexceptions	businessdays/private/nuexceptions.html	module src/businessdays/private/nuexceptions		0
+nim	MethodWoImplemDefect	businessdays/private/nuexceptions.html#MethodWoImplemDefect	object MethodWoImplemDefect		13
+nim	newMethodWoImplemDefect	businessdays/private/nuexceptions.html#newMethodWoImplemDefect,string	proc newMethodWoImplemDefect(msg = "Method without implementation override."): ref MethodWoImplemDefect		18

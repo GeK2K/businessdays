@@ -1,0 +1,3 @@
+nimTitle	easter	businessdays/private/easter.html	module src/businessdays/private/easter		0
+nim	gregorianEasterSundayMMDD	businessdays/private/easter.html#gregorianEasterSundayMMDD,int	proc gregorianEasterSundayMMDD(year: int): ?tuple[month: int, monthday: int]		36
+heading	nimquestionable module	businessdays/private/easter.html#nimquestionable-module	 <tt class="docutils literal"><span class="pre"><span class="Identifier">questionable</span></span></tt> module		0

@@ -1,0 +1,28 @@
+nimTitle	nudates	businessdays/private/nudates.html	module src/businessdays/private/nudates		0
+nim	MonthMonthday	businessdays/private/nudates.html#MonthMonthday	tuple MonthMonthday		32
+nim	cmpDate	businessdays/private/nudates.html#cmpDate,MonthMonthday,MonthMonthday	proc cmpDate(dt1, dt2: MonthMonthday): int		52
+nim	cmpDate	businessdays/private/nudates.html#cmpDate,DateTime,DateTime	proc cmpDate(dt1, dt2: DateTime): int		75
+nim	cmpDate	businessdays/private/nudates.html#cmpDate,DateTime,MonthMonthday	proc cmpDate(dt1: DateTime; dt2: MonthMonthday): int		102
+nim	cmpDateNoZero	businessdays/private/nudates.html#cmpDateNoZero,DateTime,DateTime	proc cmpDateNoZero(dt1, dt2: DateTime): int		118
+nim	`===`	businessdays/private/nudates.html#===.t,,MonthMonthday	template `===`(dt1: DateTime | MonthMonthday; dt2: MonthMonthday): untyped		164
+nim	`===`	businessdays/private/nudates.html#===.t,DateTime,DateTime	template `===`(dt1, dt2: DateTime): untyped		168
+nim	`!==`	businessdays/private/nudates.html#!==.t,DateTime,DateTime	template `!==`(dt1, dt2: DateTime): untyped		171
+nim	`<<`	businessdays/private/nudates.html#<<.t,,MonthMonthday	template `<<`(dt1: DateTime | MonthMonthday; dt2: MonthMonthday): untyped		175
+nim	`<<`	businessdays/private/nudates.html#<<.t,DateTime,DateTime	template `<<`(dt1, dt2: DateTime): untyped		179
+nim	`>>`	businessdays/private/nudates.html#>>.t,,MonthMonthday	template `>>`(dt1: DateTime | MonthMonthday; dt2: MonthMonthday): untyped		183
+nim	`>>`	businessdays/private/nudates.html#>>.t,DateTime,DateTime	template `>>`(dt1, dt2: DateTime): untyped		187
+nim	`<<=`	businessdays/private/nudates.html#<<=.t,,MonthMonthday	template `<<=`(dt1: DateTime | MonthMonthday; dt2: MonthMonthday): untyped		191
+nim	`<<=`	businessdays/private/nudates.html#<<=.t,DateTime,DateTime	template `<<=`(dt1, dt2: DateTime): untyped		195
+nim	`>>=`	businessdays/private/nudates.html#>>=.t,,MonthMonthday	template `>>=`(dt1: DateTime | MonthMonthday; dt2: MonthMonthday): untyped		199
+nim	`>>=`	businessdays/private/nudates.html#>>=.t,DateTime,DateTime	template `>>=`(dt1, dt2: DateTime): untyped		203
+nim	isLastDayOfFebruary	businessdays/private/nudates.html#isLastDayOfFebruary,DateTime	proc isLastDayOfFebruary(dt: DateTime): bool		209
+nim	getDayOfWeek	businessdays/private/nudates.html#getDayOfWeek,DateTime	proc getDayOfWeek(dt: DateTime): WeekDay		226
+nim	isSaturdayOrSunday	businessdays/private/nudates.html#isSaturdayOrSunday,DateTime	proc isSaturdayOrSunday(dt: DateTime): bool		231
+nim	searchMonthday	businessdays/private/nudates.html#searchMonthday,int,Month,WeekDay,int	proc searchMonthday(year: int; month: Month; weekday: WeekDay; nthOccurrence: int): ?MonthdayRange		236
+nimgrp	cmpdate	businessdays/private/nudates.html#cmpDate-procs-all	proc		52
+nimgrp	>>	businessdays/private/nudates.html#>>-templates-all	template		183
+nimgrp	>>=	businessdays/private/nudates.html#>>=-templates-all	template		199
+nimgrp	<<=	businessdays/private/nudates.html#<<=-templates-all	template		191
+nimgrp	===	businessdays/private/nudates.html#===-templates-all	template		164
+nimgrp	<<	businessdays/private/nudates.html#<<-templates-all	template		175
+heading	nimquestionable module	businessdays/private/nudates.html#nimquestionable-module	 <tt class="docutils literal"><span class="pre"><span class="Identifier">questionable</span></span></tt> module		0

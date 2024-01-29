@@ -1,0 +1,15 @@
+nimTitle	commonmath	businessdays/private/commonmath.html	module src/businessdays/private/commonmath		0
+nim	BoundedClosed	businessdays/private/commonmath.html#BoundedClosed	BoundedRealInterval.BoundedClosed		17
+nim	BoundedOpen	businessdays/private/commonmath.html#BoundedOpen	BoundedRealInterval.BoundedOpen		17
+nim	BoundedRightOpen	businessdays/private/commonmath.html#BoundedRightOpen	BoundedRealInterval.BoundedRightOpen		17
+nim	BoundedLeftClosed	businessdays/private/commonmath.html#BoundedLeftClosed	BoundedRealInterval.BoundedLeftClosed		17
+nim	BoundedLeftOpen	businessdays/private/commonmath.html#BoundedLeftOpen	BoundedRealInterval.BoundedLeftOpen		17
+nim	BoundedRightClosed	businessdays/private/commonmath.html#BoundedRightClosed	BoundedRealInterval.BoundedRightClosed		17
+nim	BoundedRealInterval	businessdays/private/commonmath.html#BoundedRealInterval	enum BoundedRealInterval		17
+nim	UnboundedLeftOpen	businessdays/private/commonmath.html#UnboundedLeftOpen	UnboundedRealInterval.UnboundedLeftOpen		26
+nim	UnboundedRightOpen	businessdays/private/commonmath.html#UnboundedRightOpen	UnboundedRealInterval.UnboundedRightOpen		26
+nim	UnboundedLeftClosed	businessdays/private/commonmath.html#UnboundedLeftClosed	UnboundedRealInterval.UnboundedLeftClosed		26
+nim	UnboundedRightClosed	businessdays/private/commonmath.html#UnboundedRightClosed	UnboundedRealInterval.UnboundedRightClosed		26
+nim	UnboundedRealInterval	businessdays/private/commonmath.html#UnboundedRealInterval	enum UnboundedRealInterval		26
+nim	RealInterval	businessdays/private/commonmath.html#RealInterval	type RealInterval		33
+nim	intersection	businessdays/private/commonmath.html#intersection,openArray[T],T,T,BoundedRealInterval,	proc intersection[T](oa: openArray[T]; lowerBound, upperBound: T;\n                interval: BoundedRealInterval; cmp: (T, T) -> int;\n                isSortedUnique = true): seq[T]		82

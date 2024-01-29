@@ -1,0 +1,82 @@
+nimTitle	holidays	businessdays/holidays.html	module src/businessdays/holidays		0
+nim	hdayAscension	businessdays/holidays.html#hdayAscension	qtHoliday.hdayAscension		31
+nim	hdayEasterMonday	businessdays/holidays.html#hdayEasterMonday	qtHoliday.hdayEasterMonday		31
+nim	hdayGoodFriday	businessdays/holidays.html#hdayGoodFriday	qtHoliday.hdayGoodFriday		31
+nim	hdayEasterSunday	businessdays/holidays.html#hdayEasterSunday	qtHoliday.hdayEasterSunday		31
+nim	hdayWhitMonday	businessdays/holidays.html#hdayWhitMonday	qtHoliday.hdayWhitMonday		31
+nim	hdayWhitSunday	businessdays/holidays.html#hdayWhitSunday	qtHoliday.hdayWhitSunday		31
+nim	hdayBoxingDay	businessdays/holidays.html#hdayBoxingDay	qtHoliday.hdayBoxingDay		31
+nim	hdayChristmasDay	businessdays/holidays.html#hdayChristmasDay	qtHoliday.hdayChristmasDay		31
+nim	hdayDecember31	businessdays/holidays.html#hdayDecember31	qtHoliday.hdayDecember31		31
+nim	hdayLabourDay	businessdays/holidays.html#hdayLabourDay	qtHoliday.hdayLabourDay		31
+nim	hdayNewYearsDay	businessdays/holidays.html#hdayNewYearsDay	qtHoliday.hdayNewYearsDay		31
+nim	hdayUSChristmasDayObs	businessdays/holidays.html#hdayUSChristmasDayObs	qtHoliday.hdayUSChristmasDayObs		31
+nim	hdayUSColumbusDay	businessdays/holidays.html#hdayUSColumbusDay	qtHoliday.hdayUSColumbusDay		31
+nim	hdayUSInaugurationDay	businessdays/holidays.html#hdayUSInaugurationDay	qtHoliday.hdayUSInaugurationDay		31
+nim	hdayUSInaugurationDayObs	businessdays/holidays.html#hdayUSInaugurationDayObs	qtHoliday.hdayUSInaugurationDayObs		31
+nim	hdayUSIndependenceDay	businessdays/holidays.html#hdayUSIndependenceDay	qtHoliday.hdayUSIndependenceDay		31
+nim	hdayUSIndependenceDayObs	businessdays/holidays.html#hdayUSIndependenceDayObs	qtHoliday.hdayUSIndependenceDayObs		31
+nim	hdayUSJuneteenthIndependenceDay	businessdays/holidays.html#hdayUSJuneteenthIndependenceDay	qtHoliday.hdayUSJuneteenthIndependenceDay		31
+nim	hdayUSJuneteenthIndependenceDayObs	businessdays/holidays.html#hdayUSJuneteenthIndependenceDayObs	qtHoliday.hdayUSJuneteenthIndependenceDayObs		31
+nim	hdayUSLaborDay	businessdays/holidays.html#hdayUSLaborDay	qtHoliday.hdayUSLaborDay		31
+nim	hdayUSMartinLutherKingBirthday	businessdays/holidays.html#hdayUSMartinLutherKingBirthday	qtHoliday.hdayUSMartinLutherKingBirthday		31
+nim	hdayUSMemorialDay	businessdays/holidays.html#hdayUSMemorialDay	qtHoliday.hdayUSMemorialDay		31
+nim	hdayUSNewYearsDayObs	businessdays/holidays.html#hdayUSNewYearsDayObs	qtHoliday.hdayUSNewYearsDayObs		31
+nim	hdayUSNYSEElectionDay	businessdays/holidays.html#hdayUSNYSEElectionDay	qtHoliday.hdayUSNYSEElectionDay		31
+nim	hdayUSNYSENewYearsDayObs	businessdays/holidays.html#hdayUSNYSENewYearsDayObs	qtHoliday.hdayUSNYSENewYearsDayObs		31
+nim	hdayUSThanksgivingDay	businessdays/holidays.html#hdayUSThanksgivingDay	qtHoliday.hdayUSThanksgivingDay		31
+nim	hdayUSVeteransDay	businessdays/holidays.html#hdayUSVeteransDay	qtHoliday.hdayUSVeteransDay		31
+nim	hdayUSVeteransDayObs	businessdays/holidays.html#hdayUSVeteransDayObs	qtHoliday.hdayUSVeteransDayObs		31
+nim	hdayUSWashingtonBirthday	businessdays/holidays.html#hdayUSWashingtonBirthday	qtHoliday.hdayUSWashingtonBirthday		31
+nim	qtHoliday	businessdays/holidays.html#qtHoliday	enum qtHoliday		31
+nim	qtEasterNCo	businessdays/holidays.html#qtEasterNCo	type qtEasterNCo		50
+nim	NewYearsDay	businessdays/holidays.html#NewYearsDay	const NewYearsDay		62
+nim	ChristmasDay	businessdays/holidays.html#ChristmasDay	const ChristmasDay		63
+nim	USJuneteenthIndependenceDay	businessdays/holidays.html#USJuneteenthIndependenceDay	const USJuneteenthIndependenceDay		64
+nim	USIndependanceDay	businessdays/holidays.html#USIndependanceDay	const USIndependanceDay		66
+nim	USVeteransDay	businessdays/holidays.html#USVeteransDay	const USVeteransDay		67
+nim	LabourDay	businessdays/holidays.html#LabourDay	const LabourDay		68
+nim	BoxingDay	businessdays/holidays.html#BoxingDay	const BoxingDay		69
+nim	December31	businessdays/holidays.html#December31	const December31		70
+nim	gregorianEasterSunday	businessdays/holidays.html#gregorianEasterSunday,int,HourRange,MinuteRange,SecondRange,NanosecondRange,Timezone	proc gregorianEasterSunday(year: int; hour: HourRange = 0; minute: MinuteRange = 0;\n                      second: SecondRange = 0; nanosecond: NanosecondRange = 0;\n                      zone: Timezone = local()): ?DateTime		75
+nim	gregorianEasterSundayNCo	businessdays/holidays.html#gregorianEasterSundayNCo,int,HourRange,MinuteRange,SecondRange,NanosecondRange,Timezone	proc gregorianEasterSundayNCo(year: int; hour: HourRange = 0;\n                         minute: MinuteRange = 0; second: SecondRange = 0;\n                         nanosecond: NanosecondRange = 0;\n                         zone: Timezone = local()): Table[qtEasterNCo, DateTime]		98
+nim	adjustHolidayUSSundayRule	businessdays/holidays.html#adjustHolidayUSSundayRule,DateTime	proc adjustHolidayUSSundayRule(dt: DateTime): DateTime		140
+nim	adjustHolidayUSRule	businessdays/holidays.html#adjustHolidayUSRule,DateTime	proc adjustHolidayUSRule(dt: DateTime): DateTime		150
+nim	holidayNewYearsDay	businessdays/holidays.html#holidayNewYearsDay,int	proc holidayNewYearsDay(year: int): DateTime		168
+nim	holidayUSNewYearsDayObs	businessdays/holidays.html#holidayUSNewYearsDayObs,int	proc holidayUSNewYearsDayObs(year: int): DateTime		183
+nim	holidayUSNYSENewYearsDayObs	businessdays/holidays.html#holidayUSNYSENewYearsDayObs,int	proc holidayUSNYSENewYearsDayObs(year: int): DateTime		210
+nim	holidayChristmasDay	businessdays/holidays.html#holidayChristmasDay,int	proc holidayChristmasDay(year: int): DateTime		240
+nim	holidayUSChristmasDayObs	businessdays/holidays.html#holidayUSChristmasDayObs,int	proc holidayUSChristmasDayObs(year: int): DateTime		255
+nim	holidayUSJuneteenthIndependenceDay	businessdays/holidays.html#holidayUSJuneteenthIndependenceDay,int	proc holidayUSJuneteenthIndependenceDay(year: int): DateTime		285
+nim	holidayUSJuneteenthIndependenceDayObs	businessdays/holidays.html#holidayUSJuneteenthIndependenceDayObs,int	proc holidayUSJuneteenthIndependenceDayObs(year: int): DateTime		301
+nim	holidayUSIndependenceDay	businessdays/holidays.html#holidayUSIndependenceDay,int	proc holidayUSIndependenceDay(year: int): DateTime		331
+nim	holidayUSIndependenceDayObs	businessdays/holidays.html#holidayUSIndependenceDayObs,int	proc holidayUSIndependenceDayObs(year: int): DateTime		346
+nim	holidayUSVeteransDay	businessdays/holidays.html#holidayUSVeteransDay,int	proc holidayUSVeteransDay(year: int): DateTime		376
+nim	holidayUSVeteransDayObs	businessdays/holidays.html#holidayUSVeteransDayObs,int	proc holidayUSVeteransDayObs(year: int): DateTime		391
+nim	holidayUSInaugurationDay	businessdays/holidays.html#holidayUSInaugurationDay,int	proc holidayUSInaugurationDay(year: int): ?DateTime		421
+nim	holidayUSInaugurationDayObs	businessdays/holidays.html#holidayUSInaugurationDayObs,int	proc holidayUSInaugurationDayObs(year: int): ?DateTime		463
+nim	holidayLabourDay	businessdays/holidays.html#holidayLabourDay,int	proc holidayLabourDay(year: int): DateTime		498
+nim	holidayBoxingDay	businessdays/holidays.html#holidayBoxingDay,int	proc holidayBoxingDay(year: int): DateTime		516
+nim	holidayDecember31	businessdays/holidays.html#holidayDecember31,int	proc holidayDecember31(year: int): DateTime		534
+nim	holidayUSMartinLutherKingBirthday	businessdays/holidays.html#holidayUSMartinLutherKingBirthday,int	proc holidayUSMartinLutherKingBirthday(year: int): DateTime		552
+nim	holidayUSWashingtonBirthday	businessdays/holidays.html#holidayUSWashingtonBirthday,int	proc holidayUSWashingtonBirthday(year: int): DateTime		573
+nim	holidayUSMemorialDay	businessdays/holidays.html#holidayUSMemorialDay,int	proc holidayUSMemorialDay(year: int): DateTime		594
+nim	holidayUSLaborDay	businessdays/holidays.html#holidayUSLaborDay,int	proc holidayUSLaborDay(year: int): DateTime		615
+nim	holidayUSColumbusDay	businessdays/holidays.html#holidayUSColumbusDay,int	proc holidayUSColumbusDay(year: int): DateTime		638
+nim	holidayUSThanksgivingDay	businessdays/holidays.html#holidayUSThanksgivingDay,int	proc holidayUSThanksgivingDay(year: int): DateTime		659
+nim	holidayUSNYSEElectionDay	businessdays/holidays.html#holidayUSNYSEElectionDay,int	proc holidayUSNYSEElectionDay(year: int): DateTime		681
+nim	holiday	businessdays/holidays.html#holiday,int,qtHoliday	proc holiday(year: int; holiday: qtHoliday): ?DateTime		702
+nim	isholiday	businessdays/holidays.html#isholiday,DateTime,set[qtHoliday]	proc isholiday(dt: DateTime; holidays: set[qtHoliday]): bool		743
+nim	isholiday	businessdays/holidays.html#isholiday.t,DateTime,qtHoliday	template isholiday(dt: DateTime; holiday: qtHoliday): bool		755
+nim	holidayEasterSunday	businessdays/holidays.html#holidayEasterSunday,int	proc holidayEasterSunday(year: int): ?DateTime		767
+nim	holidayEasterMonday	businessdays/holidays.html#holidayEasterMonday,int	proc holidayEasterMonday(year: int): ?DateTime		782
+nim	holidayGoodFriday	businessdays/holidays.html#holidayGoodFriday,int	proc holidayGoodFriday(year: int): ?DateTime		797
+nim	holidayAscension	businessdays/holidays.html#holidayAscension,int	proc holidayAscension(year: int): ?DateTime		812
+nim	holidayWhitMonday	businessdays/holidays.html#holidayWhitMonday,int	proc holidayWhitMonday(year: int): ?DateTime		827
+nim	holidayWhitSunday	businessdays/holidays.html#holidayWhitSunday,int	proc holidayWhitSunday(year: int): ?DateTime		842
+nim	isweekendTARGETCalendar	businessdays/holidays.html#isweekendTARGETCalendar,DateTime	proc isweekendTARGETCalendar(dt: DateTime): ?bool		859
+nim	isholidayTARGETCalendar	businessdays/holidays.html#isholidayTARGETCalendar,DateTime	proc isholidayTARGETCalendar(dt: DateTime): ?bool		874
+nim	isholidayUSNYSE	businessdays/holidays.html#isholidayUSNYSE,DateTime	proc isholidayUSNYSE(dt: DateTime): ?bool		917
+nim	isholidayUSFederalGovt	businessdays/holidays.html#isholidayUSFederalGovt,DateTime	proc isholidayUSFederalGovt(dt: DateTime): ?bool		1117
+nim	isholidayUSBondMrkt	businessdays/holidays.html#isholidayUSBondMrkt,DateTime	proc isholidayUSBondMrkt(dt: DateTime): ?bool		1171
+heading	nimquestionable module	businessdays/holidays.html#nimquestionable-module	 <tt class="docutils literal"><span class="pre"><span class="Identifier">questionable</span></span></tt> module		0

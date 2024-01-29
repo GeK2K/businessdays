@@ -1,0 +1,7 @@
+nimTitle	businessdays	businessdays.html	module src/businessdays		0
+heading	Foreword	businessdays.html#foreword	 Foreword		0
+heading	nimtimes module	businessdays.html#foreword-nimtimes-module	  <tt class="docutils literal"><span class="pre"><span class="Identifier">times</span></span></tt> module		0
+heading	nimquestionable module	businessdays.html#foreword-nimquestionable-module	  <tt class="docutils literal"><span class="pre"><span class="Identifier">questionable</span></span></tt> module		0
+heading	Feature overview	businessdays.html#feature-overview	 Feature overview		0
+heading	Using calendars	businessdays.html#feature-overview-using-calendars	  Using calendars		0
+heading	Day counting	businessdays.html#feature-overview-day-counting	  Day counting		0

@@ -1,0 +1,36 @@
+nimTitle	calendars	businessdays/calendars.html	module src/businessdays/calendars		0
+nim	bdcFollowing	businessdays/calendars.html#bdcFollowing	qtBusinessDayConvention.bdcFollowing		4
+nim	bdcPredecing	businessdays/calendars.html#bdcPredecing	qtBusinessDayConvention.bdcPredecing		4
+nim	bdcModifFollowing	businessdays/calendars.html#bdcModifFollowing	qtBusinessDayConvention.bdcModifFollowing		4
+nim	bdcModifFollowingFornight	businessdays/calendars.html#bdcModifFollowingFornight	qtBusinessDayConvention.bdcModifFollowingFornight		4
+nim	bdcEndOfMonth	businessdays/calendars.html#bdcEndOfMonth	qtBusinessDayConvention.bdcEndOfMonth		4
+nim	qtBusinessDayConvention	businessdays/calendars.html#qtBusinessDayConvention	enum qtBusinessDayConvention		4
+nim	qtCalendar	businessdays/calendars.html#qtCalendar	type qtCalendar		18
+nim	`$`	businessdays/calendars.html#$.e,qtCalendar	method `$`(calendar: qtCalendar): string		22
+nim	isweekend	businessdays/calendars.html#isweekend.e,qtCalendar,DateTime	method isweekend(calendar: qtCalendar; dt: DateTime): ?bool		27
+nim	isholiday	businessdays/calendars.html#isholiday.e,qtCalendar,DateTime	method isholiday(calendar: qtCalendar; dt: DateTime): ?bool		37
+nim	isbday	businessdays/calendars.html#isbday.e,qtCalendar,DateTime	method isbday(calendar: qtCalendar; dt: DateTime): ?bool		47
+nim	info	businessdays/calendars.html#info.e,qtCalendar,DateTime	method info(calendar: qtCalendar; dt: DateTime): string		64
+nim	nextbday	businessdays/calendars.html#nextbday.e,qtCalendar,DateTime	method nextbday(calendar: qtCalendar; dt: DateTime; forward = true;\n         searchIntervalLength = 60.Natural; startSearchOnDt = false): ?DateTime		84
+nim	bdays	businessdays/calendars.html#bdays.e,qtCalendar,DateTime,DateTime,BoundedRealInterval	method bdays(calendar: qtCalendar; fromDate, toDate: DateTime;\n      dateInterval: BoundedRealInterval): seq[DateTime]		139
+nim	bday	businessdays/calendars.html#bday.e,qtCalendar,qtBusinessDayConvention,DateTime	method bday(calendar: qtCalendar; bdayConv: qtBusinessDayConvention; dt: DateTime;\n     startSearchOnDt = true; searchIntervalLength = 60.Natural): ?DateTime		222
+nim	addbdays	businessdays/calendars.html#addbdays.e,qtCalendar,DateTime,int64	method addbdays(calendar: qtCalendar; dt: DateTime; nbdays: int64;\n         startCountOnDt = false): ?DateTime		316
+nim	observedHolidays	businessdays/calendars.html#observedHolidays.e,qtCalendar,DateTime,DateTime	method observedHolidays(calendar: qtCalendar; fromDate, toDate: DateTime): seq[DateTime]		362
+nim	observedHolidays	businessdays/calendars.html#observedHolidays.e,qtCalendar,int,Month	method observedHolidays(calendar: qtCalendar; year: int; month: Month): seq[DateTime]		387
+nim	observedHolidays	businessdays/calendars.html#observedHolidays.e,qtCalendar,int	method observedHolidays(calendar: qtCalendar; year: int): seq[DateTime]		410
+nim	klndrNoHolidayOrWeekend	businessdays/calendars.html#klndrNoHolidayOrWeekend	qtBusinessCalendar.klndrNoHolidayOrWeekend		4
+nim	klndrWeekendsOnly	businessdays/calendars.html#klndrWeekendsOnly	qtBusinessCalendar.klndrWeekendsOnly		4
+nim	klndrStaticHolidays	businessdays/calendars.html#klndrStaticHolidays	qtBusinessCalendar.klndrStaticHolidays		4
+nim	klndrTARGET	businessdays/calendars.html#klndrTARGET	qtBusinessCalendar.klndrTARGET		4
+nim	klndrUSFederalGovt	businessdays/calendars.html#klndrUSFederalGovt	qtBusinessCalendar.klndrUSFederalGovt		4
+nim	klndrUSBondMrktCalendar	businessdays/calendars.html#klndrUSBondMrktCalendar	qtBusinessCalendar.klndrUSBondMrktCalendar		4
+nim	klndrUSNYSE	businessdays/calendars.html#klndrUSNYSE	qtBusinessCalendar.klndrUSNYSE		4
+nim	qtBusinessCalendar	businessdays/calendars.html#qtBusinessCalendar	enum qtBusinessCalendar		4
+nim	newCalendarStaticHolidays	businessdays/calendars.html#newCalendarStaticHolidays,seq[MonthMonthday],set[WeekDay]	proc newCalendarStaticHolidays(staticHolidays: seq[MonthMonthday];\n                          weekendDays: set[WeekDay];\n                          description = $klndrStaticHolidays): qtCalendar		29
+nim	newCalendarNoHolidayOrWeekend	businessdays/calendars.html#newCalendarNoHolidayOrWeekend	proc newCalendarNoHolidayOrWeekend(description = $klndrNoHolidayOrWeekend): qtCalendar		44
+nim	newCalendarWeekendsOnly	businessdays/calendars.html#newCalendarWeekendsOnly	proc newCalendarWeekendsOnly(weekendDays = {dSat, dSun};\n                        description = $klndrWeekendsOnly): qtCalendar		52
+nim	newCalendarTARGET	businessdays/calendars.html#newCalendarTARGET	proc newCalendarTARGET(description = $klndrTARGET): qtCalendar		60
+nim	newCalendarUSFederalGovt	businessdays/calendars.html#newCalendarUSFederalGovt	proc newCalendarUSFederalGovt(description = $klndrUSFederalGovt): qtCalendar		67
+nim	newCalendarUSBondMrkt	businessdays/calendars.html#newCalendarUSBondMrkt	proc newCalendarUSBondMrkt(description = $klndrUSBondMrktCalendar): qtCalendar		75
+nim	newCalendarUSNYSE	businessdays/calendars.html#newCalendarUSNYSE	proc newCalendarUSNYSE(description = $klndrUSNYSE): qtCalendar		83
+nimgrp	observedholidays	businessdays/calendars.html#observedHolidays-methods-all	method		362

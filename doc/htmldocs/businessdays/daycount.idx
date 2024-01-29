@@ -1,0 +1,20 @@
+nimTitle	daycount	businessdays/daycount.html	module src/businessdays/daycount		0
+nim	dccThirtyA360	businessdays/daycount.html#dccThirtyA360	DayCountConvention.dccThirtyA360		21
+nim	dccThirtyU360	businessdays/daycount.html#dccThirtyU360	DayCountConvention.dccThirtyU360		21
+nim	dccThirtyE360	businessdays/daycount.html#dccThirtyE360	DayCountConvention.dccThirtyE360		21
+nim	dccThirtyEPlus360	businessdays/daycount.html#dccThirtyEPlus360	DayCountConvention.dccThirtyEPlus360		21
+nim	dccThirtyG360	businessdays/daycount.html#dccThirtyG360	DayCountConvention.dccThirtyG360		21
+nim	dccActual360	businessdays/daycount.html#dccActual360	DayCountConvention.dccActual360		21
+nim	dccActual365F	businessdays/daycount.html#dccActual365F	DayCountConvention.dccActual365F		21
+nim	dccActual366	businessdays/daycount.html#dccActual366	DayCountConvention.dccActual366		21
+nim	dccActual364	businessdays/daycount.html#dccActual364	DayCountConvention.dccActual364		21
+nim	dccActual36525	businessdays/daycount.html#dccActual36525	DayCountConvention.dccActual36525		21
+nim	dccActual365L	businessdays/daycount.html#dccActual365L	DayCountConvention.dccActual365L		21
+nim	dccActual365A	businessdays/daycount.html#dccActual365A	DayCountConvention.dccActual365A		21
+nim	dccNL365	businessdays/daycount.html#dccNL365	DayCountConvention.dccNL365		21
+nim	dccActualActual	businessdays/daycount.html#dccActualActual	DayCountConvention.dccActualActual		21
+nim	dccActualActualAFB	businessdays/daycount.html#dccActualActualAFB	DayCountConvention.dccActualActualAFB		21
+nim	dccBusinessDays252	businessdays/daycount.html#dccBusinessDays252	DayCountConvention.dccBusinessDays252		21
+nim	dccOneOne	businessdays/daycount.html#dccOneOne	DayCountConvention.dccOneOne		21
+nim	DayCountConvention	businessdays/daycount.html#DayCountConvention	enum DayCountConvention		21
+nim	yearFraction	businessdays/daycount.html#yearFraction,DateTime,DateTime,DayCountConvention,qtCalendar,BoundedRealInterval	proc yearFraction(startDate, endDate: DateTime; dcc: DayCountConvention;\n             calendar: qtCalendar = nil;\n             dateInterval: BoundedRealInterval = BoundedRightOpen): float64		136

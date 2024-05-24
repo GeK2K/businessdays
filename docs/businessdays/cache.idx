@@ -1,0 +1,4 @@
+nimTitle	cache	businessdays/cache.html	module src/businessdays/cache		0
+nim	bdays	businessdays/cache.html#bdays,seq[DateTime],DateTime,DateTime,BoundedRealInterval	proc bdays(bizdays: seq[DateTime]; fromDate, toDate: DateTime;\n      dateInterval: BoundedRealInterval): seq[DateTime]		19
+nim	nextbday	businessdays/cache.html#nextbday,seq[DateTime],DateTime	proc nextbday(bizdays: seq[DateTime]; dt: DateTime; forward = true;\n         startSearchOnDt = false): ?DateTime		77
+nim	addbdays	businessdays/cache.html#addbdays,seq[DateTime],DateTime,int64	proc addbdays(bizdays: seq[DateTime]; dt: DateTime; nbdays: int64;\n         startCountOnDt = false): ?DateTime		143

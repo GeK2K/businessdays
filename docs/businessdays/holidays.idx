@@ -1,0 +1,83 @@
+nimTitle	holidays	businessdays/holidays.html	module src/businessdays/holidays		0
+nim	hdayAscension	businessdays/holidays.html#hdayAscension	bdHoliday.hdayAscension		4
+nim	hdayEasterMonday	businessdays/holidays.html#hdayEasterMonday	bdHoliday.hdayEasterMonday		4
+nim	hdayGoodFriday	businessdays/holidays.html#hdayGoodFriday	bdHoliday.hdayGoodFriday		4
+nim	hdayEasterSunday	businessdays/holidays.html#hdayEasterSunday	bdHoliday.hdayEasterSunday		4
+nim	hdayWhitMonday	businessdays/holidays.html#hdayWhitMonday	bdHoliday.hdayWhitMonday		4
+nim	hdayWhitSunday	businessdays/holidays.html#hdayWhitSunday	bdHoliday.hdayWhitSunday		4
+nim	hdayBoxingDay	businessdays/holidays.html#hdayBoxingDay	bdHoliday.hdayBoxingDay		4
+nim	hdayChristmasDay	businessdays/holidays.html#hdayChristmasDay	bdHoliday.hdayChristmasDay		4
+nim	hdayDecember31	businessdays/holidays.html#hdayDecember31	bdHoliday.hdayDecember31		4
+nim	hdayLabourDay	businessdays/holidays.html#hdayLabourDay	bdHoliday.hdayLabourDay		4
+nim	hdayNewYearsDay	businessdays/holidays.html#hdayNewYearsDay	bdHoliday.hdayNewYearsDay		4
+nim	hdayUSChristmasDayObs	businessdays/holidays.html#hdayUSChristmasDayObs	bdHoliday.hdayUSChristmasDayObs		4
+nim	hdayUSColumbusDay	businessdays/holidays.html#hdayUSColumbusDay	bdHoliday.hdayUSColumbusDay		4
+nim	hdayUSInaugurationDay	businessdays/holidays.html#hdayUSInaugurationDay	bdHoliday.hdayUSInaugurationDay		4
+nim	hdayUSInaugurationDayObs	businessdays/holidays.html#hdayUSInaugurationDayObs	bdHoliday.hdayUSInaugurationDayObs		4
+nim	hdayUSIndependenceDay	businessdays/holidays.html#hdayUSIndependenceDay	bdHoliday.hdayUSIndependenceDay		4
+nim	hdayUSIndependenceDayObs	businessdays/holidays.html#hdayUSIndependenceDayObs	bdHoliday.hdayUSIndependenceDayObs		4
+nim	hdayUSJuneteenthIndependenceDay	businessdays/holidays.html#hdayUSJuneteenthIndependenceDay	bdHoliday.hdayUSJuneteenthIndependenceDay		4
+nim	hdayUSJuneteenthIndependenceDayObs	businessdays/holidays.html#hdayUSJuneteenthIndependenceDayObs	bdHoliday.hdayUSJuneteenthIndependenceDayObs		4
+nim	hdayUSLaborDay	businessdays/holidays.html#hdayUSLaborDay	bdHoliday.hdayUSLaborDay		4
+nim	hdayUSMartinLutherKingBirthday	businessdays/holidays.html#hdayUSMartinLutherKingBirthday	bdHoliday.hdayUSMartinLutherKingBirthday		4
+nim	hdayUSMemorialDay	businessdays/holidays.html#hdayUSMemorialDay	bdHoliday.hdayUSMemorialDay		4
+nim	hdayUSNewYearsDayObs	businessdays/holidays.html#hdayUSNewYearsDayObs	bdHoliday.hdayUSNewYearsDayObs		4
+nim	hdayUSNYSEElectionDay	businessdays/holidays.html#hdayUSNYSEElectionDay	bdHoliday.hdayUSNYSEElectionDay		4
+nim	hdayUSNYSENewYearsDayObs	businessdays/holidays.html#hdayUSNYSENewYearsDayObs	bdHoliday.hdayUSNYSENewYearsDayObs		4
+nim	hdayUSThanksgivingDay	businessdays/holidays.html#hdayUSThanksgivingDay	bdHoliday.hdayUSThanksgivingDay		4
+nim	hdayUSVeteransDay	businessdays/holidays.html#hdayUSVeteransDay	bdHoliday.hdayUSVeteransDay		4
+nim	hdayUSVeteransDayObs	businessdays/holidays.html#hdayUSVeteransDayObs	bdHoliday.hdayUSVeteransDayObs		4
+nim	hdayUSWashingtonBirthday	businessdays/holidays.html#hdayUSWashingtonBirthday	bdHoliday.hdayUSWashingtonBirthday		4
+nim	bdHoliday	businessdays/holidays.html#bdHoliday	enum bdHoliday		4
+nim	bdHolidayEasterNCo	businessdays/holidays.html#bdHolidayEasterNCo	type bdHolidayEasterNCo		27
+nim	adjustHolidayUSSundayRule	businessdays/holidays.html#adjustHolidayUSSundayRule,DateTime	proc adjustHolidayUSSundayRule(dt: DateTime): DateTime		38
+nim	adjustHolidayUSRule	businessdays/holidays.html#adjustHolidayUSRule,DateTime	proc adjustHolidayUSRule(dt: DateTime): DateTime		48
+nim	NewYearsDay	businessdays/holidays.html#NewYearsDay	let NewYearsDay		63
+nim	holidayNewYearsDay	businessdays/holidays.html#holidayNewYearsDay,int,Timezone	proc holidayNewYearsDay(year: int; zone: Timezone = local()): DateTime		65
+nim	ChristmasDay	businessdays/holidays.html#ChristmasDay	let ChristmasDay		86
+nim	holidayChristmasDay	businessdays/holidays.html#holidayChristmasDay,int,Timezone	proc holidayChristmasDay(year: int; zone: Timezone = local()): DateTime		88
+nim	LabourDay	businessdays/holidays.html#LabourDay	let LabourDay		109
+nim	holidayLabourDay	businessdays/holidays.html#holidayLabourDay,int,Timezone	proc holidayLabourDay(year: int; zone: Timezone = local()): DateTime		111
+nim	BoxingDay	businessdays/holidays.html#BoxingDay	let BoxingDay		132
+nim	holidayBoxingDay	businessdays/holidays.html#holidayBoxingDay,int,Timezone	proc holidayBoxingDay(year: int; zone: Timezone = local()): DateTime		134
+nim	December31	businessdays/holidays.html#December31	let December31		155
+nim	holidayDecember31	businessdays/holidays.html#holidayDecember31,int,Timezone	proc holidayDecember31(year: int; zone: Timezone = local()): DateTime		157
+nim	gregorianEasterSunday	businessdays/holidays.html#gregorianEasterSunday,int,HourRange,MinuteRange,SecondRange,NanosecondRange,Timezone	proc gregorianEasterSunday(year: int; hour: HourRange = 0; minute: MinuteRange = 0;\n                      second: SecondRange = 0; nanosecond: NanosecondRange = 0;\n                      zone: Timezone = local()): ?DateTime		178
+nim	gregorianEasterSundayNCo	businessdays/holidays.html#gregorianEasterSundayNCo,int,HourRange,MinuteRange,SecondRange,NanosecondRange,Timezone	proc gregorianEasterSundayNCo(year: int; hour: HourRange = 0;\n                         minute: MinuteRange = 0; second: SecondRange = 0;\n                         nanosecond: NanosecondRange = 0;\n                         zone: Timezone = local()): Table[bdHolidayEasterNCo,\n    DateTime]		201
+nim	holidayUSNewYearsDayObs	businessdays/holidays.html#holidayUSNewYearsDayObs,int,Timezone	proc holidayUSNewYearsDayObs(year: int; zone: Timezone = local()): DateTime		6
+nim	holidayUSNYSENewYearsDayObs	businessdays/holidays.html#holidayUSNYSENewYearsDayObs,int,Timezone	proc holidayUSNYSENewYearsDayObs(year: int; zone: Timezone = local()): DateTime		37
+nim	holidayUSChristmasDayObs	businessdays/holidays.html#holidayUSChristmasDayObs,int,Timezone	proc holidayUSChristmasDayObs(year: int; zone: Timezone = local()): DateTime		71
+nim	USJuneteenthIndependenceDay	businessdays/holidays.html#USJuneteenthIndependenceDay	let USJuneteenthIndependenceDay		105
+nim	holidayUSJuneteenthIndependenceDay	businessdays/holidays.html#holidayUSJuneteenthIndependenceDay,int,Timezone	proc holidayUSJuneteenthIndependenceDay(year: int; zone: Timezone = local()): DateTime		108
+nim	holidayUSJuneteenthIndependenceDayObs	businessdays/holidays.html#holidayUSJuneteenthIndependenceDayObs,int,Timezone	proc holidayUSJuneteenthIndependenceDayObs(year: int; zone: Timezone = local()): DateTime		128
+nim	USIndependanceDay	businessdays/holidays.html#USIndependanceDay	let USIndependanceDay		162
+nim	holidayUSIndependenceDay	businessdays/holidays.html#holidayUSIndependenceDay,int,Timezone	proc holidayUSIndependenceDay(year: int; zone: Timezone = local()): DateTime		164
+nim	holidayUSIndependenceDayObs	businessdays/holidays.html#holidayUSIndependenceDayObs,int,Timezone	proc holidayUSIndependenceDayObs(year: int; zone: Timezone = local()): DateTime		183
+nim	USVeteransDay	businessdays/holidays.html#USVeteransDay	let USVeteransDay		217
+nim	holidayUSVeteransDay	businessdays/holidays.html#holidayUSVeteransDay,int,Timezone	proc holidayUSVeteransDay(year: int; zone: Timezone = local()): DateTime		219
+nim	holidayUSVeteransDayObs	businessdays/holidays.html#holidayUSVeteransDayObs,int,Timezone	proc holidayUSVeteransDayObs(year: int; zone: Timezone = local()): DateTime		238
+nim	holidayUSInaugurationDay	businessdays/holidays.html#holidayUSInaugurationDay,int,Timezone	proc holidayUSInaugurationDay(year: int; zone: Timezone = local()): ?DateTime		272
+nim	holidayUSInaugurationDayObs	businessdays/holidays.html#holidayUSInaugurationDayObs,int,Timezone	proc holidayUSInaugurationDayObs(year: int; zone: Timezone = local()): ?DateTime		317
+nim	holidayUSMartinLutherKingBirthday	businessdays/holidays.html#holidayUSMartinLutherKingBirthday,int,Timezone	proc holidayUSMartinLutherKingBirthday(year: int; zone: Timezone = local()): DateTime		356
+nim	holidayUSWashingtonBirthday	businessdays/holidays.html#holidayUSWashingtonBirthday,int,Timezone	proc holidayUSWashingtonBirthday(year: int; zone: Timezone = local()): DateTime		381
+nim	holidayUSMemorialDay	businessdays/holidays.html#holidayUSMemorialDay,int,Timezone	proc holidayUSMemorialDay(year: int; zone: Timezone = local()): DateTime		405
+nim	holidayUSLaborDay	businessdays/holidays.html#holidayUSLaborDay,int,Timezone	proc holidayUSLaborDay(year: int; zone: Timezone = local()): DateTime		429
+nim	holidayUSColumbusDay	businessdays/holidays.html#holidayUSColumbusDay,int,Timezone	proc holidayUSColumbusDay(year: int; zone: Timezone = local()): DateTime		455
+nim	holidayUSThanksgivingDay	businessdays/holidays.html#holidayUSThanksgivingDay,int,Timezone	proc holidayUSThanksgivingDay(year: int; zone: Timezone = local()): DateTime		479
+nim	holidayUSNYSEElectionDay	businessdays/holidays.html#holidayUSNYSEElectionDay,int,Timezone	proc holidayUSNYSEElectionDay(year: int; zone: Timezone = local()): DateTime		504
+nim	holiday	businessdays/holidays.html#holiday,int,bdHoliday,Timezone	proc holiday(year: int; holiday: bdHoliday; zone: Timezone = local()): ?DateTime		3
+nim	isholiday	businessdays/holidays.html#isholiday,DateTime,set[bdHoliday]	proc isholiday(dt: DateTime; holidays: set[bdHoliday]): bool		52
+nim	isholiday	businessdays/holidays.html#isholiday.t,DateTime,bdHoliday	template isholiday(dt: DateTime; holiday: bdHoliday): bool		66
+nim	holidayEasterSunday	businessdays/holidays.html#holidayEasterSunday,int,Timezone	proc holidayEasterSunday(year: int; zone: Timezone = local()): ?DateTime		78
+nim	holidayEasterMonday	businessdays/holidays.html#holidayEasterMonday,int,Timezone	proc holidayEasterMonday(year: int; zone: Timezone = local()): ?DateTime		96
+nim	holidayGoodFriday	businessdays/holidays.html#holidayGoodFriday,int,Timezone	proc holidayGoodFriday(year: int; zone: Timezone = local()): ?DateTime		114
+nim	holidayAscension	businessdays/holidays.html#holidayAscension,int,Timezone	proc holidayAscension(year: int; zone: Timezone = local()): ?DateTime		132
+nim	holidayWhitMonday	businessdays/holidays.html#holidayWhitMonday,int,Timezone	proc holidayWhitMonday(year: int; zone: Timezone = local()): ?DateTime		150
+nim	holidayWhitSunday	businessdays/holidays.html#holidayWhitSunday,int,Timezone	proc holidayWhitSunday(year: int; zone: Timezone = local()): ?DateTime		168
+nim	isholidayUSNYSE	businessdays/holidays.html#isholidayUSNYSE,DateTime	proc isholidayUSNYSE(dt: DateTime): ?bool		3
+nim	isholidayUSFederalGovt	businessdays/holidays.html#isholidayUSFederalGovt,DateTime	proc isholidayUSFederalGovt(dt: DateTime): ?bool		203
+nim	isholidayUSBondMrkt	businessdays/holidays.html#isholidayUSBondMrkt,DateTime	proc isholidayUSBondMrkt(dt: DateTime): ?bool		257
+nim	isweekendTARGETCalendar	businessdays/holidays.html#isweekendTARGETCalendar,DateTime	proc isweekendTARGETCalendar(dt: DateTime): ?bool		1
+nim	isholidayTARGETCalendar	businessdays/holidays.html#isholidayTARGETCalendar,DateTime	proc isholidayTARGETCalendar(dt: DateTime): ?bool		16
+heading	nimquestionable module	businessdays/holidays.html#nimquestionable-module	 <tt class="docutils literal"><span class="pre"><span class="Identifier">questionable</span></span></tt> module		0
+heading	nimnudates module	businessdays/holidays.html#nimnudates-module	 <tt class="docutils literal"><span class="pre"><span class="Identifier">nudates</span></span></tt> module		0

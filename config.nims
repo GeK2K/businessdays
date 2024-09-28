@@ -9,7 +9,7 @@ const
   tstDir = "./tst"
   docDir = "./docs"
   mainfile = srcDir.joinPath("businessdays.nim")
-  runTestsTasks = "runTests"
+  runTestsTask = "runTests"
   gitUrl = "https://github.com/GeK2K/businessdays.git"
 
 
@@ -29,6 +29,21 @@ if (NimMajor, NimMinor) >= (1, 6):
 
 # procs
 # =====
+proc  cleanDir() =
+  echo "\n\n"
+  echo "======================================================="
+  echo "Start of task:  cleaning 'bin' and 'docs' directories.."
+  echo "======================================================="
+  for aDir in [binDir, docDir]:
+    for kind, path in walkDir(aDir):
+      if kind == pcFile:  rmFile(path.string)  
+      elif kind == pcDir:  rmDir(path.string)    
+      else:  discard
+  echo "==========="
+  echo "End of task"
+  echo "==========="
+
+
 proc  nimCompilation(options = "", comment = "") =
   let taskStartBegin = "Start of task:  "
   let length = taskStartBegin.len + comment.len
@@ -62,14 +77,15 @@ task  buildApp, "":
 What task(s) do you want to accomplish?
 
 -1 = exit
- 0 = compilation in danger mode
- 1 = compilation in default mode
- 2 = compilation in release mode
- 3 = run tests
+ 0 = cleaning directories ('bin' and 'docs')
+ 1 = compilation in danger mode
+ 2 = compilation in default mode
+ 3 = compilation in release mode
  4 = run nimdoc
+ 5 = run tests
 """
   # valid choices
-  let validUsrChoices = (-1..4).mapIt($it)
+  let validUsrChoices = (-1..5).mapIt($it)
   let validUsrChoicesStr = join(validUsrChoices, " ")
   while true:  # we stop only at the user's request
     # reading and validating user choices
@@ -94,20 +110,19 @@ What task(s) do you want to accomplish?
       usrChoices
     # processing of user choices
     for c in usrChoices:
-      if c == "-1":
-        quit(QuitSuccess)
-      elif c == "0":
-        nimCompilation(options = "-d:danger", comment = "Nim compilation in danger mode..")
+      if c == "-1":  quit(QuitSuccess)
+      elif c == "0":  cleanDir()
       elif c == "1":
-        nimCompilation(options = "", comment = "Nim compilation in default mode..")
+        nimCompilation(options = "-d:danger", comment = "Nim compilation in danger mode..")
       elif c == "2":
+        nimCompilation(options = "", comment = "Nim compilation in default mode..")
+      elif c == "3":
         nimCompilation(options = "-d:release", comment = "Nim compilation in release mode..")
-      elif c == "3": 
+      elif c == "4":  runNimDoc()
+      elif c == "5": 
         # execution of the 'runTests' task defined in the './tst/config.nims' file
         withDir tstDir:
-          selfExec runTestsTasks
-      elif c == "4":
-        runNimDoc()
+          selfExec runTestsTask
       else:
         raise newException(ValueError, fmt("\nThe value {c} is not supported by the system !"))
 

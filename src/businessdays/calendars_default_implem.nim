@@ -8,8 +8,11 @@ type
     klndrStaticHolidays = "calendar with static holidays"
     klndrTARGET = "TARGET calendar"
     klndrUSFederalGovt = "U.S. Federal Government calendar"
-    klndrUSBondMrktCalendar = "U.S. Bond Market calendar"
+    klndrUSBondMrkt = "U.S. Bond Market calendar"
     klndrUSNYSE = "New York Stock Exchance (NYSE) calendar"
+    klndrGBEngWls = "Calendar of England and Wales"
+    klndrGBSct = "Scotland calendar"
+    klndrGBNir = "Northen Ireland calendar"
 
 
 # ==========================     bdCalendarImpl     ========================== #
@@ -27,7 +30,7 @@ type
 # ============================    Constructors     =========================== #
 
 proc  newCalendarStaticHolidays*(staticHolidays: seq[MonthMonthday],
-                                 weekendDays: set[WeekDay],
+                                 weekendDays: set[WeekDay] = {dSat, dSun},
                                  description = $klndrStaticHolidays): 
                                 bdCalendar =
   ## Returns a new calendar with static holidays.
@@ -72,9 +75,9 @@ proc  newCalendarUSFederalGovt*(description = $klndrUSFederalGovt): bdCalendar =
   result = newCalendar
 
 
-proc  newCalendarUSBondMrkt*(description = $klndrUSBondMrktCalendar): bdCalendar =
+proc  newCalendarUSBondMrkt*(description = $klndrUSBondMrkt): bdCalendar =
   ## Returns a new U.S. Bond Market calendar.
-  let newCalendar = bdCalendarImpl(klndr: klndrUSBondMrktCalendar, 
+  let newCalendar = bdCalendarImpl(klndr: klndrUSBondMrkt, 
                                    description: description, 
                                    weekendDays: {dSat, dSun})
   result = newCalendar
@@ -83,6 +86,27 @@ proc  newCalendarUSBondMrkt*(description = $klndrUSBondMrktCalendar): bdCalendar
 proc  newCalendarUSNYSE*(description = $klndrUSNYSE): bdCalendar =
   ## Returns a new U.S. NYSE calendar.
   let newCalendar = bdCalendarImpl(klndr: klndrUSNYSE, description: description, 
+                                   weekendDays: {dSat, dSun})
+  result = newCalendar
+
+
+proc  newCalendarGBEngWls*(description = $klndrGBEngWls): bdCalendar =
+  ## Returns a new calendar of England and Wales.
+  let newCalendar = bdCalendarImpl(klndr: klndrGBEngWls, description: description, 
+                                   weekendDays: {dSat, dSun})
+  result = newCalendar
+
+
+proc  newCalendarGBSct*(description = $klndrGBSct): bdCalendar =
+  ## Returns a new Scotland calendar.
+  let newCalendar = bdCalendarImpl(klndr: klndrGBSct, description: description, 
+                                   weekendDays: {dSat, dSun})
+  result = newCalendar
+
+
+proc  newCalendarGBNir*(description = $klndrGBNir): bdCalendar =
+  ## Returns a new calendar of Northen Ireland.
+  let newCalendar = bdCalendarImpl(klndr: klndrGBNir, description: description, 
                                    weekendDays: {dSat, dSun})
   result = newCalendar
 
@@ -106,10 +130,16 @@ proc  newCalendar*(bizCalendar: bdBusinessCalendar,
       return newCalendarTARGET(description = description)
     of klndrUSFederalGovt:
       return newCalendarUSFederalGovt(description = description)
-    of klndrUSBondMrktCalendar:
+    of klndrUSBondMrkt:
       return newCalendarUSBondMrkt(description = description)
     of klndrUSNYSE:
       return newCalendarUSNYSE(description = description)
+    of klndrGBEngWls:
+      return newCalendarGBEngWls(description = description)
+    of klndrGBSct:
+      return newCalendarGBSct(description = description)
+    of klndrGBNir:
+      return newCalendarGBNir(description = description)
 
 
 # ==========================     Procs & Methods     ========================= #
@@ -117,18 +147,16 @@ proc  newCalendar*(bizCalendar: bdBusinessCalendar,
 method  `$`(calendar: bdCalendarImpl): string =
   ## Returns a string representation of `calendar`.
   case calendar.klndr:
-    of klndrWeekendsOnly:  
-      result = fmt"{calendar.description} ({$calendar.weekendDays})"
-    else:
-      result = calendar.description
+    of klndrWeekendsOnly:  result = fmt"{calendar.description} ({$calendar.weekendDays})"
+    else:  result = calendar.description
 
 
 method  isweekend(calendar: bdCalendarImpl, dt: DateTime): Option[bool] = 
   ##[
   **Returns:**
-    - `some(true)` if `dt` is a weekend in the `calendar` calendar.
-    - `some(false)` if `dt` is not a weekend in the `calendar` calendar.
-    - `none(bool)` if the system cannot answer the question.
+    - `some(true)` if `dt` is a weekend in the `calendar` calendar
+    - `some(false)` if `dt` is not a weekend in the `calendar` calendar
+    - `none(bool)` if the system cannot answer the question
   ]##
   (getDayOfWeek(dt) in calendar.weekendDays).some
 
@@ -136,9 +164,9 @@ method  isweekend(calendar: bdCalendarImpl, dt: DateTime): Option[bool] =
 method  isholiday(calendar: bdCalendarImpl, dt: DateTime): Option[bool] = 
   ##[
   **Returns:**
-    - `some(true)` if `dt` is a holiday in the `calendar` calendar.
-    - `some(false)` if `dt` is not a holiday in the `calendar` calendar.
-    - `none(bool)` if the system cannot answer the question.
+    - `some(true)` if `dt` is a holiday in the `calendar` calendar
+    - `some(false)` if `dt` is not a holiday in the `calendar` calendar
+    - `none(bool)` if the system cannot answer the question
   ]##
   case calendar.klndr
     of klndrNoHolidayOrWeekend, klndrWeekendsOnly:  
@@ -149,4 +177,7 @@ method  isholiday(calendar: bdCalendarImpl, dt: DateTime): Option[bool] =
     of klndrTARGET:  return isholidayTARGETCalendar(dt)
     of klndrUSNYSE:  return isholidayUSNYSE(dt)
     of klndrUSFederalGovt:  return isholidayUSFederalGovt(dt)
-    of klndrUSBondMrktCalendar:  return isholidayUSBondMrkt(dt)
+    of klndrUSBondMrkt:  return isholidayUSBondMrkt(dt)
+    of klndrGBEngWls:  return isholidayEngland(dt)
+    of klndrGBSct:  return isholidayScotland(dt)
+    of klndrGBNir:  return isholidayNorthIreland(dt)

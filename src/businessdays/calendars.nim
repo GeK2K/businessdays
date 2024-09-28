@@ -6,13 +6,11 @@ The `calendars` module contains routines and types for dealing with calendars
 (holidays, week-ends, businessdays, arithmetic with business days, etc.).
 ]##
 
-
 # =========================     Imports / Exports     ======================== #
 
 import  std/[algorithm, sequtils, strformat]
-import  ./private/[nuexceptions, numath]
-import  holidays
-export  holidays, numath
+import  holidays, nimutils/[nuexceptions, numath_intersect]
+export  holidays, nuexceptions, numath_intersect
 
 # =============================     Includes     ============================= #
 

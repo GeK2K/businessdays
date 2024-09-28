@@ -1,5 +1,3 @@
-# =====================     Holidays on U.S. NYSE     ==================== #
-
 proc  isholidayUSNYSE*(dt: DateTime): ?bool =
   ##[
   **Returns:**
@@ -10,7 +8,7 @@ proc  isholidayUSNYSE*(dt: DateTime): ?bool =
 
   **Business days and holidays:**
 
-    On the New York Stock Exchange **all days are operating days except**:
+    On the New York Stock Exchange (NYSE) *all days are operating days except*:
     - Saturdays and Sundays (weekends)
     - Holidays that are moved to Monday if it is Sunday:
       - New Year's Day, January 1st
@@ -40,16 +38,16 @@ proc  isholidayUSNYSE*(dt: DateTime): ?bool =
 
   # Official Closings
   # -----------------
-  if dt.isholiday(hdayUSNYSENewYearsDayObs):  return some(true)
+  if dt.isholiday(hdayUSNYSENewYearsDay):  return some(true)
   if dt.isholiday(hdayUSMartinLutherKingBirthday) and dt.year > 1997:  return some(true)
   if dt.isholiday(hdayUSWashingtonBirthday) and dt.year > 1970:  return some(true)
   if dt.isholiday(hdayGoodFriday) and dt.year notin [1898, 1906, 1907]:  return some(true)
   if dt.isholiday(hdayUSMemorialDay) and dt.year > 1970:  return some(true)
-  if dt.isholiday(hdayUSIndependenceDayObs):  return some(true)
+  if dt.isholiday(hdayUSIndependenceDay):  return some(true)
   if dt.isholiday(hdayUSLaborDay) and dt.year > 1887:  return some(true)
   if dt.isholiday(hdayUSThanksgivingDay):  return some(true)
-  if dt.isholiday(hdayUSChristmasDayObs):  return some(true)
-  if dt.isholiday(hdayUSJuneteenthIndependenceDayObs) and dt.year > 2022:  return some(true)
+  if dt.isholiday(hdayUSChristmasDay):  return some(true)
+  if dt.isholiday(hdayUSJuneteenthIndependenceDay) and dt.year > 2022:  return some(true)
 
   # Special Closings
   # ----------------
@@ -171,10 +169,7 @@ proc  isholidayUSNYSE*(dt: DateTime): ?bool =
   return some(false)
 
 
-# ====     Holidays for the U.S. Federal Govt and the U.S. Bond Market     === #
-
-proc  isholidayUSFedGovtOrUSBondMrkt(dt: DateTime, USFedGovtCalendar: bool): 
-                                    ?bool =
+proc  isholidayUSFedGovtOrUSBondMrkt(dt: DateTime, USFedGovtCalendar: bool): ?bool =
   ## 'U.S. Federal Govt' and 'U.S. Bond Market' have:
   ##   - 9 common holidays
   ##   - 2 common holidays that can be observed differently  
@@ -183,20 +178,20 @@ proc  isholidayUSFedGovtOrUSBondMrkt(dt: DateTime, USFedGovtCalendar: bool):
   if dt.isholiday(hdayUSMartinLutherKingBirthday) and dt.year > 1983:  return some(true)
   if dt.isholiday(hdayUSWashingtonBirthday) and dt.year > 1879:  return some(true)
   if dt.isholiday(hdayUSMemorialDay) and dt.year > 1968:  return some(true)
-  if dt.isholiday(hdayUSIndependenceDayObs) and dt.year > 1870:  return some(true)
+  if dt.isholiday(hdayUSIndependenceDay) and dt.year > 1870:  return some(true)
   if dt.isholiday(hdayUSLaborDay) and dt.year > 1894:  return some(true)
   if dt.isholiday(hdayUSColumbusDay) and dt.year > 1968:  return some(true)
-  if dt.isholiday(hdayUSVeteransDayObs) and dt.year > 1938:  return some(true)
+  if dt.isholiday(hdayUSVeteransDay) and dt.year > 1938:  return some(true)
   if dt.isholiday(hdayUSThanksgivingDay) and dt.year > 1941:  return some(true)
-  if dt.isholiday(hdayUSChristmasDayObs) and dt.year > 1870:  return some(true)
+  if dt.isholiday(hdayUSChristmasDay) and dt.year > 1870:  return some(true)
   if USFedGovtCalendar:
-    if dt.isholiday(hdayUSNewYearsDayObs) and dt.year > 1870:  return some(true)
-    if dt.isholiday(hdayUSInaugurationDayObs):  return some(true)
-    if dt.isholiday(hdayUSJuneteenthIndependenceDayObs) and dt.year > 2020:  return some(true)
+    if dt.isholiday(hdayUSNewYearsDay) and dt.year > 1870:  return some(true)
+    if dt.isholiday(hdayUSInaugurationDay):  return some(true)
+    if dt.isholiday(hdayUSJuneteenthIndependenceDay) and dt.year > 2020:  return some(true)
   else:
-    if dt.isholiday(hdayUSNYSENewYearsDayObs) and dt.year > 1870:  return some(true)
+    if dt.isholiday(hdayUSNYSENewYearsDay) and dt.year > 1870:  return some(true)
     if dt.isholiday(hdayGoodFriday) and dt.year > 1886:  return some(true)
-    if dt.isholiday(hdayUSJuneteenthIndependenceDayObs) and dt.year > 2021:  return some(true)
+    if dt.isholiday(hdayUSJuneteenthIndependenceDay) and dt.year > 2021:  return some(true)
   return some(false)
 
 
@@ -209,7 +204,7 @@ proc  isholidayUSFederalGovt*(dt: DateTime): ?bool =
 
   **Business days and holidays:**
 
-    In the U.S. Federal Government calendars **all days are operating days except**:
+    In the U.S. Federal Government calendars *all days are operating days except*:
     - Saturdays and Sundays (weekends)
     - Holidays that are moved to Monday if it is Sunday, or to Friday if it is Saturday:
       - New Year's Day, January 1st, since 1871
@@ -233,9 +228,9 @@ proc  isholidayUSFederalGovt*(dt: DateTime): ?bool =
 
   **Notes:**
 
-    The results provided by this procedure have been **successfully compared** 
-    to the 209 holidays of the years 2011 to 2030. These holidays can be viewed
-    here:
+    The results provided by this procedure have been *successfully compared* 
+    to the 209 holidays of the years 2011 to 2030. These holidays can be 
+    viewed here:
     - https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/#url=Historical-Data
   ]##
   runnableExamples:
@@ -283,15 +278,13 @@ proc  isholidayUSBondMrkt*(dt: DateTime): ?bool =
   
   # Official Closings
   # -----------------
-  
-  if isholiday =? isholidayUSFedGovtOrUSBondMrkt(dt, USFedGovtCalendar = false):
-    if isholiday:  return some(true)
+  if isholiday =? isholidayUSFedGovtOrUSBondMrkt(dt, USFedGovtCalendar = false) and isholiday:  return some(true)
   
   # Special Closings
   # ----------------
 
   # President George H.W. Bush's funeral
   # <https://www.newyorkfed.org/markets/opolicy/operating_policy_181204>
-  if dt.cmpDate(dateTime(2018, mDec, 5.MonthdayRange)) == 0:  return some(true)
+  if dt ==~ dateTime(2018, mDec, 5.MonthdayRange):  return some(true)
 
   return some(false)

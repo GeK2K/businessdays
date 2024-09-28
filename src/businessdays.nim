@@ -28,8 +28,8 @@ Foreword
 
 We systematically used the comparison operators of the 
 `nudates <https://gek2k.github.io/nudates/nudates.html>`_ 
-module. For example `~==` for equality test, `!~==` 
-for inequality test, and so on.
+module. For example `==~` for equality test, `!==~` 
+for non-equality test, and so on.
 
 
 `questionable` module
@@ -74,48 +74,45 @@ runnableExamples:
   let dt6 = dateTime(2015, mJan, 6)    # Tuesday
 
   # 'dt1' (resp. 'dt2', 'dt3') is a holiday (resp. business day, weekend)
-  doAssert: !calendar.isholiday(dt1) 
-  doAssert: !calendar.isbday(dt2)
-  doAssert: !calendar.isweekend(dt3)
+  doAssert:  !calendar.isholiday(dt1) 
+  doAssert:  !calendar.isbday(dt2)
+  doAssert:  !calendar.isweekend(dt3)
   
   # all known information about a date can be grouped into a string
-  doAssert: calendar.info(dt4) == "Sunday, January 4, 2015:  " & 
+  doAssert:  calendar.info(dt4) == "Sunday, January 4, 2015:  " & 
     "not a business day, not a holiday, weekend"
- 
-  # when necessary we can distinguish official and observed holidays; e.g.:
-  #   - official Christmas Day 2021 = December 25 (Saturday)
-  #   - observed Christmas Day 2021 = December 24 (Friday)
-  doAssert: holidayChristmasDay(2021) ~== dateTime(2021, mDec, 25)
-  doAssert: holidayUSChristmasDayObs(2021) ~== dateTime(2021, mDec, 24)
-  doAssert: calendar.info(dateTime(2021, mDec, 25)) == "Saturday, December 25, 2021:  " & 
+  doAssert:  calendar.info(dateTime(2021, mDec, 25)) == "Saturday, December 25, 2021:  " & 
     "not a business day, not a holiday, weekend"
-  doAssert: calendar.info(dateTime(2021, mDec, 24)) == "Friday, December 24, 2021:  " & 
+  doAssert:  calendar.info(dateTime(2021, mDec, 24)) == "Friday, December 24, 2021:  " & 
     "not a business day, holiday, not a weekend"
-  # it is therefore only December 24 which is considered a public holiday by the system
+  # In 2021, Christmas Day was celebrated on Friday December 24 
+  # on the New York Stock Exchange; it is this day that is 
+  # considered a public holiday by the system, not December 25.
+
 
   # nearest business day (in the future or in the past)
-  doAssert: !calendar.nextbday(dt1, forward = true) ~== dt2
-  doAssert: !calendar.nextbday(dt1, forward = false) ~== dt0
+  doAssert:  !calendar.nextbday(dt1, forward = true) ==~ dt2
+  doAssert:  !calendar.nextbday(dt1, forward = false) ==~ dt0
  
   # you can shift by one or more business days (forward or backward)
-  doAssert: !calendar.addbdays(dt0, 1) ~== dt2
-  doAssert: !calendar.addbdays(dt0, 2) ~== dt5
-  doAssert: !calendar.addbdays(dt6, -3) ~== dt0
+  doAssert:  !calendar.addbdays(dt0, 1) ==~ dt2
+  doAssert:  !calendar.addbdays(dt0, 2) ==~ dt5
+  doAssert:  !calendar.addbdays(dt6, -3) ==~ dt0
   
   # business day conventions are supported
   let dt11 = dateTime(2011, mApr, 29)  # Friday
   let dt12 = dateTime(2012, mMar, 28)  # Wednesday
   let dt13 = dateTime(2012, mMar, 30)  # Friday
-  # 'bdcEndOfMonth' is an item of the 'qtBusinessDayConvention' enumeration
-  doAssert: !calendar.bday(bdcEndOfMonth, dt11) ~== dt11
-  doAssert: !calendar.bday(bdcEndOfMonth, dt12) ~== dt13
+  # 'bdcEndOfMonth' is an item of the 'bdBusinessDayConvention' enumeration
+  doAssert:  !calendar.bday(bdcEndOfMonth, dt11) ==~ dt11
+  doAssert:  !calendar.bday(bdcEndOfMonth, dt12) ==~ dt13
   
   # business days between two dates (the 'dateInterval' parameter 
   # allows you to include or exclude 'fromDate' or 'toDate')
   let bizDays = calendar.bdays(fromDate = dt0, toDate = dt6, 
                                dateInterval = BoundedClosed)
-  doAssert: bizdays == @[dt0, dt2, dt5, dt6]  
-  doAssert: bizdays.len == 4  # number of business days
+  doAssert:  bizdays == @[dt0, dt2, dt5, dt6]  
+  doAssert:  bizdays.len == 4  # number of business days
   
   # 2 public holidays observed in January 2024
   let obsHolidays2024January = calendar.observedHolidays(2024, mJan)
@@ -145,7 +142,7 @@ runnableExamples:
                        dateInterval = BoundedClosed)
   # 365 calendar days - 104 weekends - 10 observed holidays = 
   #   251 business days
-  doAssert: bizDaysNYSE2025.len == 251
+  doAssert:  bizDaysNYSE2025.len == 251
   
   # some calculations with the above sequence
   let dt250117 = dateTime(2025, mJan, 17)  # Friday
@@ -154,9 +151,9 @@ runnableExamples:
   # January 20, 2025: Birthday of Martin Luther King (holiday)
   let dt250121 = dateTime(2025, mJan, 21)  # Tuesday (business day)
   let dt250122 = dateTime(2025, mJan, 22)  # Wednesday (business day)
-  doAssert: !bizDaysNYSE2025.nextbday(dt250117) ~== dt250121 
-  doAssert: !bizDaysNYSE2025.addbdays(dt250121, -1) ~== dt250117
-  doAssert: !bizDaysNYSE2025.addbdays(dt250117, 2) ~== dt250122  
+  doAssert:  !bizDaysNYSE2025.nextbday(dt250117) ==~ dt250121 
+  doAssert:  !bizDaysNYSE2025.addbdays(dt250121, -1) ==~ dt250117
+  doAssert:  !bizDaysNYSE2025.addbdays(dt250117, 2) ==~ dt250122  
 
 
 ## Day counting
@@ -169,33 +166,31 @@ runnableExamples:
   ## 'daycount' module of the "Imports" section
   ## --------------------------------------------
 
-  let utcZone = utc()  # the timezone we will use
-
   # Time interval 1:  from  31 January 2008  to  28 February 2008  (leap year)
   # --------------------------------------------------------------------------
-  let startDate1 = dateTime(2008, mJan, 31, zone = utcZone)
-  let endDate1 = dateTime(2008, mFeb, 28, zone = utcZone)
+  let startDate1 = dateTime(2008, mJan, 31)
+  let endDate1 = dateTime(2008, mFeb, 28)
 
-  doAssert: yearFraction(startDate1, endDate1, dccActual360) == 28.0/360.0
-  doAssert: yearFraction(startDate1, endDate1, dccThirtyA360) == 28.0/360.0
-  doAssert: yearFraction(startDate1, endDate1, dccThirtyU360) == 28.0/360.0
-  doAssert: yearFraction(startDate1, endDate1, dccThirtyE360) == 28.0/360.0
-  doAssert: yearFraction(startDate1, endDate1, dccThirtyEPlus360) == 28.0/360.0
-  doAssert: yearFraction(startDate1, endDate1, dccThirtyG360) == 28.0/360.0
+  doAssert:  yearFraction(startDate1, endDate1, dccActual360) == 28.0/360.0
+  doAssert:  yearFraction(startDate1, endDate1, dccThirtyA360) == 28.0/360.0
+  doAssert:  yearFraction(startDate1, endDate1, dccThirtyU360) == 28.0/360.0
+  doAssert:  yearFraction(startDate1, endDate1, dccThirtyE360) == 28.0/360.0
+  doAssert:  yearFraction(startDate1, endDate1, dccThirtyEPlus360) == 28.0/360.0
+  doAssert:  yearFraction(startDate1, endDate1, dccThirtyG360) == 28.0/360.0
 
   # Day count is 28.0 for all considered day count conventions.
 
   # Time interval 2:  from  28 February 2007  to  31 March 2007  (non-leap year)
   # ----------------------------------------------------------------------------
-  let startDate2 = dateTime(2007, mFeb, 28, zone = utcZone)
-  let endDate2 = dateTime(2007, mMar, 31, zone = utcZone)
+  let startDate2 = dateTime(2007, mFeb, 28)
+  let endDate2 = dateTime(2007, mMar, 31)
 
-  doAssert: yearFraction(startDate2, endDate2, dccActual360) == 31.0/360.0
-  doAssert: yearFraction(startDate2, endDate2, dccThirtyA360) == 33.0/360.0
-  doAssert: yearFraction(startDate2, endDate2, dccThirtyU360) == 30.0/360.0
-  doAssert: yearFraction(startDate2, endDate2, dccThirtyE360) == 32.0/360.0
-  doAssert: yearFraction(startDate2, endDate2, dccThirtyEPlus360) == 33.0/360.0
-  doAssert: yearFraction(startDate2, endDate2, dccThirtyG360) == 30.0/360.0
+  doAssert:  yearFraction(startDate2, endDate2, dccActual360) == 31.0/360.0
+  doAssert:  yearFraction(startDate2, endDate2, dccThirtyA360) == 33.0/360.0
+  doAssert:  yearFraction(startDate2, endDate2, dccThirtyU360) == 30.0/360.0
+  doAssert:  yearFraction(startDate2, endDate2, dccThirtyE360) == 32.0/360.0
+  doAssert:  yearFraction(startDate2, endDate2, dccThirtyEPlus360) == 33.0/360.0
+  doAssert:  yearFraction(startDate2, endDate2, dccThirtyG360) == 30.0/360.0
 
   # The actual number of days is 31.0. But depending on 
   # how the convention manages the end of the month, and 

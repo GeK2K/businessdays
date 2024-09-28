@@ -27,9 +27,9 @@ method  `$`*(calendar: bdCalendar): string  {.base.} =
 method  isweekend*(calendar: bdCalendar, dt: DateTime): ?bool  {.base.} = 
   ##[
   **Returns:**
-    - `some(true)` if `dt` is a weekend in the `calendar` calendar.
-    - `some(false)` if `dt` is not a weekend in the `calendar` calendar.
-    - `none(bool)` if the system cannot answer the question.
+    - `some(true)` if `dt` is a weekend in the `calendar` calendar
+    - `some(false)` if `dt` is not a weekend in the `calendar` calendar
+    - `none(bool)` if the system cannot answer the question
   ]##
   raise newMethodWoImplemDefect()
 
@@ -37,9 +37,9 @@ method  isweekend*(calendar: bdCalendar, dt: DateTime): ?bool  {.base.} =
 method  isholiday*(calendar: bdCalendar, dt: DateTime): ?bool  {.base.} = 
   ##[
   **Returns:**
-    - `some(true)` if `dt` is a holiday in the `calendar` calendar.
-    - `some(false)` if `dt` is not a holiday in the `calendar` calendar.
-    - `none(bool)` if the system cannot answer the question.
+    - `some(true)` if `dt` is a holiday in the `calendar` calendar
+    - `some(false)` if `dt` is not a holiday in the `calendar` calendar
+    - `none(bool)` if the system cannot answer the question
   ]##
   raise newMethodWoImplemDefect()
 
@@ -47,22 +47,16 @@ method  isholiday*(calendar: bdCalendar, dt: DateTime): ?bool  {.base.} =
 method  isbday*(calendar: bdCalendar, dt: DateTime): ?bool  {.base.} = 
   ##[
   **Returns:**
-    - `some(true)` if `dt` is a business day in the `calendar` calendar.
-    - `some(false)` if `dt` is not a business day in the `calendar` calendar.
-    - `none(bool)` if the system cannot answer the question.
-  
-  **Implementation:**
-    ```nim
-    if dtIsholiday =? calendar.isholiday(dt) and dtIsweekend =? calendar.isweekend(dt):
-        result = some(not (dtIsholiday or dtIsweekend))
-    ```
+    - `some(true)` if `dt` is a business day in the `calendar` calendar
+    - `some(false)` if `dt` is not a business day in the `calendar` calendar
+    - `none(bool)` if the system cannot answer the question
   ]## 
   if dtIsholiday =? calendar.isholiday(dt) and dtIsweekend =? calendar.isweekend(dt):
     result = some(not (dtIsholiday or dtIsweekend))
 
 
 method  info*(calendar: bdCalendar, dt: DateTime): string  {.base.} = 
-  ## Returns all known information about `dt` as a string. 
+  ## Returns all known information about `dt`. 
 
   runnableExamples:
     let calendar = newCalendarUSNYSE()  # New York Stock Exchange (NYSE) calendar
@@ -105,28 +99,23 @@ method  nextbday*(calendar: bdCalendar, dt: DateTime, forward = true,
   ]##
 
   runnableExamples:
-    let dt1 = dateTime(2015, mJan, 1)  # Thursday - New Year's Day
+    let dt0 = dateTime(2014, mDec, 31)  # Wednesday
+    let dt1 = dateTime(2015, mJan, 1)  # Thursday (New Year's Day)
     let dt2 = dateTime(2015, mJan, 2)  # Friday
-    let dt3 = dateTime(2015, mJan, 3)  # Saturday
-    let dt4 = dateTime(2015, mJan, 4)  # Sunday
-    let dt5 = dateTime(2015, mJan, 5)  # Monday
-    let dt6 = dateTime(2015, mJan, 6)  # Tuesday
+    # January 3 to January 4 = weekend
+    let dt3 = dateTime(2015, mJan, 5)  # Monday
   
     let calendar = newCalendarUSFederalGovt()
 
     doAssert: not !calendar.isbday(dt1)
-    doAssert: !calendar.nextbday(dt1, startSearchOnDt = true) ~== dt2
-    doAssert: !calendar.nextbday(dt1, startSearchOnDt = false) ~== dt2
-    doAssert: !calendar.nextbday(dt2, startSearchOnDt = true) ~== dt2
-    doAssert: !calendar.nextbday(dt2, startSearchOnDt = false) ~== dt5
-    doAssert: !calendar.nextbday(dt3, startSearchOnDt = true) ~== dt5
-    doAssert: !calendar.nextbday(dt3, startSearchOnDt = false) ~== dt5
-    doAssert: !calendar.nextbday(dt4, startSearchOnDt = false) ~== dt5
-    doAssert: !calendar.nextbday(dt5, startSearchOnDt = false) ~== dt6
+    doAssert: !calendar.nextbday(dt2) ==~ dt3
+    doAssert: !calendar.nextbday(dt0, forward = true, startSearchOnDt = true) ==~ dt0
+    doAssert: !calendar.nextbday(dt0, forward = false, startSearchOnDt = true) ==~ dt0
+    doAssert: !calendar.nextbday(dt0, forward = true, startSearchOnDt = false) ==~ dt2
+    doAssert: !calendar.nextbday(dt2, forward = false, startSearchOnDt = false) ==~ dt0
 
   doAssert: searchIntervalLength > 0
-  if dtIsBday =? calendar.isbday(dt) and dtIsBday and startSearchOnDt:  
-    return some(dt)
+  if dtIsBday =? calendar.isbday(dt) and dtIsBday and startSearchOnDt:  return some(dt)
   let oneDay = if forward: 1.days else: -1.days
   var dayToTest = dt
   for i in 1..searchIntervalLength:
@@ -184,9 +173,9 @@ method  bdays*(calendar: bdCalendar; fromDate, toDate: DateTime;
     doAssert: calendar.bdays(dt0, dt6, BoundedRightOpen) == @[dt0, dt2, dt5]
 
   doAssert: fromDate.timeZone == toDate.timeZone
-  doAssert: fromDate <<~== toDate
+  doAssert: fromDate <<==~ toDate
 
-  if fromDate ~== toDate:  # case #1:  fromDate == toDate
+  if fromDate ==~ toDate:  # case #1:  fromDate == toDate
     case dateInterval:
       of BoundedOpen, BoundedRightOpen, BoundedLeftOpen, 
           BoundedLeftClosed, BoundedRightClosed:  return @[]
@@ -208,7 +197,7 @@ method  bdays*(calendar: bdCalendar; fromDate, toDate: DateTime;
     (fromDt, toDt)
 
   # search for business days one after the other
-  let maxNumDays = (toDt-fromDt).inDays + 1  # int64
+  let maxNumDays = diffDays(toDt, fromDt) + 1  # int64
   result = newSeqOfCap[DateTime](maxNumDays)
   var dt = fromDt
   while true:
@@ -219,12 +208,8 @@ method  bdays*(calendar: bdCalendar; fromDate, toDate: DateTime;
     dt = dt + 1.days
 
 
-method  bday*(calendar: bdCalendar,
-              bdayConv: bdBusinessDayConvention,
-              dt: DateTime,
-              startSearchOnDt = true,
-              searchIntervalLength = 60.Natural): 
-             ?DateTime {.base.} =
+method  bday*(calendar: bdCalendar, bdayConv: bdBusinessDayConvention, dt: DateTime,
+              startSearchOnDt = true, searchIntervalLength = 60.Natural): ?DateTime {.base.} =
   ##[
   **Returns:**
     - The business day of the `calendar` calendar which is obtained by
@@ -249,58 +234,52 @@ method  bday*(calendar: bdCalendar,
     let dt1 = dateTime(2011, mSep, 18)  # Sunday
     let dt2 = dateTime(2011, mSep, 19)  # Monday
     let dt3 = dateTime(2011, mSep, 16)  # Friday
-    doAssert: !calendar.bday(bdcFollowing, dt1) ~== dt2
-    doAssert: !calendar.bday(bdcPredecing, dt1) ~== dt3
+    doAssert: !calendar.bday(bdcFollowing, dt1) ==~ dt2
+    doAssert: !calendar.bday(bdcPredecing, dt1) ==~ dt3
 
     let dt4 = dateTime(2011, mJul, 30)  # Saturday
     let dt5 = dateTime(2011, mAug, 1)   # Monday
     let dt6 = dateTime(2011, mJul, 29)  # Friday
-    doAssert: !calendar.bday(bdcFollowing, dt4) ~== dt5
-    doAssert: !calendar.bday(bdcModifFollowing, dt4) ~== dt6
-    doAssert: !calendar.bday(bdcModifFollowingFornight, dt4) ~== dt6
+    doAssert: !calendar.bday(bdcFollowing, dt4) ==~ dt5
+    doAssert: !calendar.bday(bdcModifFollowing, dt4) ==~ dt6
+    doAssert: !calendar.bday(bdcModifFollowingFornight, dt4) ==~ dt6
 
     let dt7 = dateTime(2011, mOct, 15)  # Saturday
     let dt8 = dateTime(2011, mOct, 17)  # Monday
     let dt9 = dateTime(2011, mOct, 14)  # Friday 
-    doAssert: !calendar.bday(bdcFollowing, dt7) ~== dt8
-    doAssert: !calendar.bday(bdcModifFollowing, dt7) ~== dt8
-    doAssert: !calendar.bday(bdcModifFollowingFornight, dt7) ~== dt9
+    doAssert: !calendar.bday(bdcFollowing, dt7) ==~ dt8
+    doAssert: !calendar.bday(bdcModifFollowing, dt7) ==~ dt8
+    doAssert: !calendar.bday(bdcModifFollowingFornight, dt7) ==~ dt9
 
     let dt10 = dateTime(2011, mMar, 28)  # Monday
     let dt11 = dateTime(2011, mMar, 31)  # Wednesday
     let dt12 = dateTime(2011, mApr, 29)  # Friday
     let dt13 = dateTime(2012, mMar, 28)  # Wednesday
     let dt14 = dateTime(2012, mMar, 30)  # Friday
-    doAssert: !calendar.bday(bdcEndOfMonth, dt10) ~== dt11
-    doAssert: !calendar.bday(bdcEndOfMonth, dt12) ~== dt12
-    doAssert: !calendar.bday(bdcEndOfMonth, dt13) ~== dt14
+    doAssert: !calendar.bday(bdcEndOfMonth, dt10) ==~ dt11
+    doAssert: !calendar.bday(bdcEndOfMonth, dt12) ==~ dt12
+    doAssert: !calendar.bday(bdcEndOfMonth, dt13) ==~ dt14
 
   case bdayConv
     of bdcFollowing:
-      return  calendar.nextbday(dt = dt, forward = true, 
-                                startSearchOnDt = startSearchOnDt,  
+      return  calendar.nextbday(dt = dt, forward = true, startSearchOnDt = startSearchOnDt,  
                                 searchIntervalLength = searchIntervalLength)
     of bdcPredecing:  
-      return  calendar.nextbday(dt = dt, forward = false, 
-                                startSearchOnDt = startSearchOnDt,  
+      return  calendar.nextbday(dt = dt, forward = false, startSearchOnDt = startSearchOnDt,  
                                 searchIntervalLength = searchIntervalLength)
     of bdcModifFollowing:
-      if tmpResult =? calendar.nextbday(dt = dt, forward = true, 
-                                        startSearchOnDt = startSearchOnDt,  
+      if tmpResult =? calendar.nextbday(dt = dt, forward = true, startSearchOnDt = startSearchOnDt,  
                                         searchIntervalLength = searchIntervalLength):
         if tmpResult.month == dt.month:  return  some(tmpResult)
-        else:  return calendar.nextbday(dt = tmpResult, forward = false, 
-                                        startSearchOnDt = false,
+        else:  return calendar.nextbday(dt = tmpResult, forward = false, startSearchOnDt = false,
                                         searchIntervalLength = searchIntervalLength)
       else:  return  none(DateTime)
     of bdcModifFollowingFornight:
-      if tmpResult =? calendar.bday(bdcModifFollowing, dt, 
-                                    startSearchOnDt = startSearchOnDt,  
+      if tmpResult =? calendar.bday(bdcModifFollowing, dt, startSearchOnDt = startSearchOnDt,  
                                     searchIntervalLength = searchIntervalLength):
         if dt.monthday > 15:  return  some(tmpResult)
         elif tmpResult.monthday > 15:
-          return  calendar.bday(bdcPredecing, tmpResult, 
-                                startSearchOnDt = false,
+          return  calendar.bday(bdcPredecing, tmpResult, startSearchOnDt = false,
                                 searchIntervalLength = searchIntervalLength)
       else:  return  none(DateTime)
     of bdcEndOfMonth:
@@ -334,33 +313,30 @@ method  addbdays*(calendar: bdCalendar, dt: DateTime, nbdays: int64,
     let calendar = newCalendarUSFederalGovt()
 
     # business days shifted forward
-    doAssert: !calendar.addbdays(dt1, 1) ~== dt2
-    doAssert: !calendar.addbdays(dt1, 2) ~== dt5
-    doAssert: !calendar.addbdays(dt1, 3) ~== dt6
-    doAssert: !calendar.addbdays(dt3, 1) ~== dt5
-    doAssert: !calendar.addbdays(dt4, 1) ~== dt5
+    doAssert: !calendar.addbdays(dt1, 1) ==~ dt2
+    doAssert: !calendar.addbdays(dt1, 2) ==~ dt5
+    doAssert: !calendar.addbdays(dt1, 3) ==~ dt6
+    doAssert: !calendar.addbdays(dt3, 1) ==~ dt5
+    doAssert: !calendar.addbdays(dt4, 1) ==~ dt5
     # business days shifted backward
-    doAssert: !calendar.addbdays(dt6, -1, true) ~== dt6
-    doAssert: !calendar.addbdays(dt6, -1, false) ~== dt5
-    doAssert: !calendar.addbdays(dt6, -2, true) ~== dt5
-    doAssert: !calendar.addbdays(dt6, -2, false) ~== dt2
+    doAssert: !calendar.addbdays(dt6, -1, true) ==~ dt6
+    doAssert: !calendar.addbdays(dt6, -1, false) ==~ dt5
+    doAssert: !calendar.addbdays(dt6, -2, true) ==~ dt5
+    doAssert: !calendar.addbdays(dt6, -2, false) ==~ dt2
 
   doAssert: nbdays!=0
   let goAhead = (nbdays > 0)
-  var tmpResult = calendar.nextbday(dt = dt, forward = goAhead, 
-                                    startSearchOnDt = startCountOnDt)
+  var tmpResult = calendar.nextbday(dt = dt, forward = goAhead, startSearchOnDt = startCountOnDt)
   if isNone(tmpResult):  return none(DateTime)
   if abs(nbdays) == 1:  return tmpResult
   for count in 2..abs(nbdays):
     let tempDt = get(tmpResult)
-    tmpResult = calendar.nextbday(dt = tempDt, forward = goAhead, 
-                                  startSearchOnDt = false)
+    tmpResult = calendar.nextbday(dt = tempDt, forward = goAhead, startSearchOnDt = false)
     if isNone(tmpResult): return none(DateTime)
   return tmpResult
 
 
-method  observedHolidays*(calendar: bdCalendar; fromDate, toDate: DateTime): 
-                         seq[DateTime] {.base.} = 
+method  observedHolidays*(calendar: bdCalendar; fromDate, toDate: DateTime): seq[DateTime] {.base.} =
   ##[
   Observed public holidays between `fromDate` and `toDate` (both included).
 
@@ -379,13 +355,11 @@ method  observedHolidays*(calendar: bdCalendar; fromDate, toDate: DateTime):
   var dt = fromDate
   while true:
     if dt >> toDate:  return result
-    if dtIsWE =? calendar.isweekend(dt) and not dtIsWE and dt notin bdays:
-      result.add(dt) 
+    if dtIsWE =? calendar.isweekend(dt) and not dtIsWE and dt notin bdays:  result.add(dt) 
     dt = dt + 1.days
 
 
-method  observedHolidays*(calendar: bdCalendar; year: int, month: Month): 
-                         seq[DateTime] {.base.} = 
+method  observedHolidays*(calendar: bdCalendar; year: int, month: Month): seq[DateTime] {.base.} = 
   ##[
   Observed public holidays during the month 
   defined by `<year>` and `<month>` parameters.

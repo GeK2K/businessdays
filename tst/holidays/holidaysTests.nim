@@ -2,10 +2,13 @@ import  std/[algorithm, strutils, tables]
 import  businessdays
 
 # mapping:  klndr -> (data file, min year in data file, max year in data file)
-let context = 
-  {klndrUSFederalGovt: ("holidaysUSFederalGovtObserved.txt", 2011, 2030),
-   klndrUSBondMrktCalendar: ("holidaysUSBondMrktObserved.txt", 2018, 2027),
-   klndrUSNYSE: ("holidaysUSNYSEObserved.txt", 2012, 2025)}.toTable
+let context = {#
+  klndrUSFederalGovt: ("holidaysUSFederalGovtObserved.txt", 2011, 2030),
+  klndrUSBondMrkt: ("holidaysUSBondMrktObserved.txt", 2018, 2027),
+  klndrUSNYSE: ("holidaysUSNYSEObserved.txt", 2012, 2025),
+  klndrGBEngWls: ("holidaysEnglandWalesObserved.txt", 2018, 2026),
+  klndrGBSct: ("holidaysScotlandObserved.txt", 2018, 2026),
+  klndrGBNir: ("holidaysNorthIrelandObserved.txt", 2018, 2026)}.toTable
 
 for klndr in context.keys:
   # holidays observed
@@ -33,20 +36,22 @@ for klndr in context.keys:
   let calendar = 
     case klndr:
       of klndrUSFederalGovt:  newCalendarUSFederalGovt()
-      of klndrUSBondMrktCalendar:  newCalendarUSBondMrkt()
+      of klndrUSBondMrkt:  newCalendarUSBondMrkt()
       of klndrUSNYSE: newCalendarUSNYSE()
-      else:  newCalendarUSFederalGovt()
+      of klndrGBEngWls:  newCalendarGBEngWls()
+      of klndrGBSct:  newCalendarGBSct()
+      of klndrGBNir:  newCalendarGBNir()
+      of klndrNoHolidayOrWeekend, klndrWeekendsOnly, klndrStaticHolidays, klndrTARGET:
+        newCalendarUSFederalGovt()
   let holidaysCalculated = 
     calendar.observedHolidays(dateTime(startYear, mJan, 1), dateTime(endYear, mDec, 31))
 
   # TEST
-  doAssert: sorted(holidaysCalculated) == sorted(holidaysObserved)
-
-  # echo calendar.observedHolidays(2025)
-  #echo sorted(calendar.observedHolidays(2025))
-  # let b = sorted(holidaysObserved)
-  # doAssert:  len(a) == len(b) 
-  # for i in low(a)..high(a):
-  #  if a[i] != b[i]:  echo $a[i], "  --  ", $b[i]
-
+  #[
+  echo "Tested calendar:  " & $klndr
+  if sorted(holidaysCalculated) != sorted(holidaysObserved):
+    echo sorted(holidaysCalculated)
+    echo sorted(holidaysObserved)    
+  ]#
+  doAssert:  sorted(holidaysCalculated) == sorted(holidaysObserved)
 

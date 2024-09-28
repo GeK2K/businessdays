@@ -24,8 +24,7 @@ Nim +2.0.0
 
 ## Dependencies
   - [questionable](https://github.com/codex-storage/questionable)
-  - [nudates](https://github.com/GeK2K/nudates)
-  - [easter](https://github.com/GeK2K/easter)
+  - [nimutils](https://github.com/GeK2K/nimutils)
 
 
 ## Getting started
@@ -65,17 +64,17 @@ doAssert: !calendar.isweekend(dt3)
 # all known information about a date can be grouped into a string
 doAssert: calendar.info(dt4) == "Sunday, January 4, 2015:  " & 
   "not a business day, not a holiday, weekend"
- 
-# when necessary we can distinguish official and observed holidays; e.g.:
-#   - official Christmas Day 2021 = December 25 (Saturday)
-#   - observed Christmas Day 2021 = December 24 (Friday)
-doAssert: holidayChristmasDay(2021) ~== dateTime(2021, mDec, 25)
-doAssert: holidayUSChristmasDayObs(2021) ~== dateTime(2021, mDec, 24)
-doAssert: calendar.info(dateTime(2021, mDec, 25)) == "Saturday, December 25, 2021:  " & 
+
+# all known information about a date can be grouped into a string
+doAssert:  calendar.info(dt4) == "Sunday, January 4, 2015:  " & 
   "not a business day, not a holiday, weekend"
-doAssert: calendar.info(dateTime(2021, mDec, 24)) == "Friday, December 24, 2021:  " & 
+doAssert:  calendar.info(dateTime(2021, mDec, 25)) == "Saturday, December 25, 2021:  " & 
+  "not a business day, not a holiday, weekend"
+doAssert:  calendar.info(dateTime(2021, mDec, 24)) == "Friday, December 24, 2021:  " & 
   "not a business day, holiday, not a weekend"
-# it is therefore only December 24 which is considered a public holiday by the system
+# In 2021, Christmas Day was celebrated on Friday December 24 
+# on the New York Stock Exchange; it is this day that is 
+# considered a public holiday by the system, not December 25.
 
 # nearest business day (in the future or in the past)
 doAssert: !calendar.nextbday(dt1, forward = true) ~== dt2
@@ -90,7 +89,7 @@ doAssert: !calendar.addbdays(dt6, -3) ~== dt0
 let dt11 = dateTime(2011, mApr, 29)  # Friday
 let dt12 = dateTime(2012, mMar, 28)  # Wednesday
 let dt13 = dateTime(2012, mMar, 30)  # Friday
-# 'bdcEndOfMonth' is an item of the 'qtBusinessDayConvention' enumeration
+# 'bdcEndOfMonth' is an item of the 'bdBusinessDayConvention' enumeration
 doAssert: !calendar.bday(bdcEndOfMonth, dt11) ~== dt11
 doAssert: !calendar.bday(bdcEndOfMonth, dt12) ~== dt13
   
@@ -143,6 +142,9 @@ doAssert: !bizDaysNYSE2025.addbdays(dt250121, -1) ~== dt250117
 doAssert: !bizDaysNYSE2025.addbdays(dt250117, 2) ~== dt250122  
 ```
 
+The reader is encouraged to consult the module documentation 
+for an overview of other features made available.
+
 
 ## Some similar works
 
@@ -152,9 +154,5 @@ Similar modules have been developed in other programming languages:
 
 
 ## Documentation
-
-[API Reference](https://gek2k.github.io/businessdays/)
-
-
-[1]: https://en.wikipedia.org/wiki/Date_of_Easter#Anonymous_Gregorian_algorithm
-[2]: https://github.com/nim-lang/nimble
+  - [API Reference](https://gek2k.github.io/businessdays/businessdays.html)
+  - [Index](https://gek2k.github.io/businessdays)

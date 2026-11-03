@@ -1,0 +1,388 @@
+##[
+========
+daycount
+========
+
+The `daycount` module allows you to calculate the duration between 
+two dates according to the calculation convention of your choice.
+The user is encouraged to see the 
+`yearFraction <#yearFraction,DateTime,DateTime,bdDayCountConvention,bdCalendar,BoundedInterval>`_ 
+`proc` for more details.
+]##
+
+
+# =========================     Imports / Exports     ======================== #
+
+import  calendars, nimutils/[nuconstants, nudates]
+export  calendars
+
+
+# =======================     Day count conventions    ======================= #
+
+type
+  bdDayCountConvention* = enum
+    ##[
+    Description of each element of the `bdDayCountConvention` enumeration.
+
+      - *bdDayCountConvention*.**dccThirtyA360**
+          - http://deltaquants.com/day-count-conventions /
+            Table 2: DCF calculations / 30/360 ISDA day count method.
+
+      - *bdDayCountConvention*.**dccThirtyU360**
+          - http://deltaquants.com/day-count-conventions /
+            Table 2: DCF calculations / 30/360 US day count method.
+
+      - *bdDayCountConvention*.**dccThirtyE360**
+          - http://deltaquants.com/day-count-conventions /
+            Table 2: DCF calculations / 30E/360 day count method.
+
+      - *bdDayCountConvention*.**dccThirtyEPlus360**
+          - http://deltaquants.com/day-count-conventions /
+            Table 2: DCF calculations / 30E+/360 day count method.
+
+      - *bdDayCountConvention*.**dccThirtyG360**
+          - http://deltaquants.com/day-count-conventions /
+            Table 2: DCF calculations / 30/360 German day count method.
+
+      - *bdDayCountConvention*.**dccActual360**
+          - The number of days between the start and end dates is divided by 360
+            (each full year is therefore assumed to have 360 ​​days).
+
+      - *bdDayCountConvention*.**dccActual365F**
+          - The number of days between the start and end dates is divided by 365
+            (each full year is therefore assumed to have 365 ​​days).	
+
+      - *bdDayCountConvention*.**dccActual366**
+          - The number of days between the start and end dates is divided by 366
+            (each full year is therefore assumed to have 366 ​​days).	 
+
+      - *bdDayCountConvention*.**dccActual364**
+          - The number of days between the start and end dates is divided by 364
+            (each full year is therefore assumed to have 364 ​​days).	  
+
+      - *bdDayCountConvention*.**dccActual36525**
+          - The number of days between the start and end dates is divided by 365.25
+            (each full year is therefore assumed to have 365.25 ​​days).
+
+      - *bdDayCountConvention*.**dccActual365L**
+          - http://deltaquants.com/day-count-conventions /
+            Table 2: DCF calculations / Act/365L day count method.
+
+      - *bdDayCountConvention*.**dccActual365A**
+          - http://deltaquants.com/day-count-conventions /
+            Table 2: DCF calculations / Act/365A day count method.	
+
+      - *bdDayCountConvention*.**dccNL365**
+          - http://deltaquants.com/day-count-conventions /
+            Table 2: DCF calculations / NL/365 day count method.  
+
+      - *bdDayCountConvention*.**dccActualActual**
+          - http://deltaquants.com/day-count-conventions /
+            Table 2: DCF calculations / Act/Act day count method.		
+
+      - *bdDayCountConvention*.**dccActualActualAFB**
+          - https://en.wikipedia.org/wiki/Day_count_convention#Actual/Actual_AFB	
+
+      - *bdDayCountConvention*.**dccBusinessDays252**
+          - The number of business days between the start and end dates is divided by 252
+            (each full year is therefore assumed to have 252 business ​​days).	
+
+      - *bdDayCountConvention*.**dccOneOne**
+          - https://en.wikipedia.org/wiki/Day_count_convention#1/1   
+    ]##  
+    dccThirtyA360 = "30A/360"  ## Also known as "30/360 Bond basis" or "30/360 ISDA"
+    dccThirtyU360 = "30U/360"  ## Also known as "30US/360", "30/360 US" or "30/360 SIA" 
+    dccThirtyE360 = "30E/360"  ## Also known as "30/360 European", "Eurobond basis", 
+                               ## "Special German", "30/360 ISMA" or "30/360 ICMA"
+    dccThirtyEPlus360 = "30E+/360"  ## No other name known
+    dccThirtyG360 = "30/360 German"  ## Also known as "30E/360 ISDA"
+    dccActual360 = "Actual/360"  ## Also known as "French" 
+    dccActual365F = "Actual/365 Fixed"  ## Also known as "English"
+    dccActual366 = "Actual/366"  ## No other name known 
+    dccActual364 = "Actual/364"  ## No other name known 
+    dccActual36525 = "Actual/365.25"  ## No other name known 
+    dccActual365L = "Actual/365L"  ## Also known as "ISMA-Year"
+    dccActual365A = "Actual/365A"  ## No other name known 
+    dccNL365 = "NL/365"  ## Also known as "Actual/365 No leap year", "NL365"
+    dccActualActual = "Actual/Actual" ## Also known as "Actual/Actual ISDA"	
+    dccActualActualAFB = "Actual/Actual AFB" ## No other name known
+    dccBusinessDays252 = "BusinessDays/252"  ## Also known as "BUS/252" or "BD/252" 
+    dccOneOne = "1/1" ## Also known as "One/One"
+
+
+# =======================     Day count calculations    ====================== #
+
+func yearFraction360(y1, m1, d1, y2, m2, d2: int): float64 {.inline.} =
+  ## Calculates the duration between two dates when 
+  ## the calculation convention is a 360 method.
+  ## NO CHECK IS MADE ON THE VALUES OF THE PARAMETERS
+  ## (these must be done upstream).
+  ##   - d1/m1/y1 is the start date
+  ##   - d2/m2/y2 is the end date
+  float64(360*(y2-y1)+30*(m2-m1)+(d2-d1)) / 360.0
+ 
+
+proc yearFraction*(dcc: bdDayCountConvention; startDate, endDate: DateTime; 
+                   startDateIncl = ynYes, endDateIncl = ynYes, calendar: bdCalendar = nil): float64 =
+  ##[
+  Calculates the duration between the starting date `<startDate>` and 
+  the end date `<endDate>`, according to the day count convention `<dcc>`.
+  
+  **Notes:**
+    - If `endDate < startDate` the result is equal to
+      `-yearFraction(dcc, startDate = endDate, endDate = startDate, startDateIncl = endDateIncl, 
+      endDateIncl = startDateIncl, calendar)`.
+    -  `startDateIncl`,  `endDateIncl` and `calendar` parameters are 
+      only use when `dcc == dccBusinessDays252`.
+    - The `startDateIncl` and `endDateIncl` parameters allow you to include/exclude 
+      `<startDate>` and `<endDate>` for business day counting. 
+
+  **Main references:**
+    - http://deltaquants.com/day-count-conventions
+    - https://en.wikipedia.org/wiki/Day_count_convention
+    - https://quant.opengamma.io/Interest-Rate-Instruments-and-Market-Conventions.pdf (pp. 5-7)
+  ]##
+
+  runnableExamples:
+    # Time interval 1:  from  31 January 2008  to  28 February 2008  (leap year)
+    # --------------------------------------------------------------------------
+    let startDate1 = dateTime(2008, mJan, 31)
+    let endDate1 = dateTime(2008, mFeb, 28)
+ 
+    doAssert: yearFraction(dccActual360, startDate1, endDate1) == 28.0/360.0
+    doAssert: yearFraction(dccThirtyA360, startDate1, endDate1) == 28.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate1, endDate1) == 28.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate1, endDate1) == 28.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate1, endDate1) == 28.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate1, endDate1) == 28.0/360.0
+
+    # Day count is 28.0 for all considered day count conventions.
+
+    # Time interval 2:  from  28 February 2007  to  31 March 2007  (non-leap year)
+    # ----------------------------------------------------------------------------
+    let startDate2 = dateTime(2007, mFeb, 28)
+    let endDate2 = dateTime(2007, mMar, 31)
+
+    doAssert: yearFraction(dccActual360, startDate2, endDate2) == 31.0/360.0
+    doAssert: yearFraction(dccThirtyA360, startDate2, endDate2) == 33.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate2, endDate2) == 30.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate2, endDate2) == 32.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate2, endDate2) == 33.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate2, endDate2) == 30.0/360.0
+
+    # - Depending on the considered day count convention, 
+    #   the day count varies from 30.0 to 33.0 (4 values).
+    #
+    # - The actual number of days is 31.0. But depending on 
+    #   how the convention manages the end of the month, and 
+    #   the end of the month of February, we can also obtain 
+    #   30.0, 32.0 or 33.0 days.
+
+
+    # The following 4 numerical examples are taken from
+    # http://deltaquants.com/day-count-conventions
+
+    # Time interval 3:  from  28 December 2007  to  28 February 2008
+    # --------------------------------------------------------------
+    let startDate3 = dateTime(2007, mDec, 28)
+    let endDate3 = dateTime(2008, mFeb, 28)
+
+    doAssert: yearFraction(dccThirtyA360, startDate3, endDate3) == 60.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate3, endDate3) == 60.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate3, endDate3) == 60.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate3, endDate3) == 60.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate3, endDate3) == 60.0/360.0
+    doAssert: yearFraction(dccActual360, startDate3, endDate3) == 62.0/360.0
+    doAssert: yearFraction(dccActual365F, startDate3, endDate3) == 62.0/365.0
+    doAssert: yearFraction(dccActual365L, startDate3, endDate3) == 62.0/366.0
+    doAssert: yearFraction(dccActual365A, startDate3, endDate3) == 62.0/365.0
+    doAssert: yearFraction(dccNL365, startDate3, endDate3) == 62.0/365.0
+    doAssert: yearFraction(dccActualActual, startDate3, endDate3) == 4.0/365.0+58.0/366.0
+
+    # Time interval 4:  from  28 December 2007  to  29 February 2008
+    # --------------------------------------------------------------
+    let startDate4 = dateTime(2007, mDec, 28)
+    let endDate4 = dateTime(2008, mFeb, 29)
+
+    doAssert: yearFraction(dccThirtyA360, startDate4, endDate4) == 61.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate4, endDate4) == 61.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate4, endDate4) == 61.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate4, endDate4) == 61.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate4, endDate4) == 62.0/360.0
+    doAssert: yearFraction(dccActual360, startDate4, endDate4) == 63.0/360.0
+    doAssert: yearFraction(dccActual365F, startDate4, endDate4) == 63.0/365.0
+    doAssert: yearFraction(dccActual365L, startDate4, endDate4) == 63.0/366.0
+    doAssert: yearFraction(dccActual365A, startDate4, endDate4) == 63.0/366.0
+    doAssert: yearFraction(dccNL365, startDate4, endDate4) == 62.0/365.0
+    doAssert: yearFraction(dccActualActual, startDate4, endDate4) == 4.0/365.0+59.0/366.0
+
+    # Time interval 5:  from  31 October 2007  to  30 November 2008
+    # --------------------------------------------------------------
+    let startDate5 = dateTime(2007, mOct, 31)
+    let endDate5 = dateTime(2008, mNov, 30)
+
+    doAssert: yearFraction(dccThirtyA360, startDate5, endDate5) == 390.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate5, endDate5) == 390.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate5, endDate5) == 390.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate5, endDate5) == 390.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate5, endDate5) == 390.0/360.0
+    doAssert: yearFraction(dccActual360, startDate5, endDate5) == 396.0/360.0
+    doAssert: yearFraction(dccActual365F, startDate5, endDate5) == 396.0/365.0
+    doAssert: yearFraction(dccActual365L, startDate5, endDate5) == 396.0/366.0
+    doAssert: yearFraction(dccActual365A, startDate5, endDate5) == 396.0/366.0
+    doAssert: yearFraction(dccNL365, startDate5, endDate5) == 395.0/365.0
+    doAssert: yearFraction(dccActualActual, startDate5, endDate5) == 62.0/365.0+334.0/366.0
+
+    # Time interval 6:  from  1 February 2008  to  31 May 2009
+    # --------------------------------------------------------
+    let startDate6 = dateTime(2008, mFeb, 1)
+    let endDate6 = dateTime(2009, mMay, 31)
+
+    doAssert: yearFraction(dccThirtyA360, startDate6, endDate6) == 480.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate6, endDate6) == 480.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate6, endDate6) == 479.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate6, endDate6) == 480.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate6, endDate6) == 479.0/360.0
+    doAssert: yearFraction(dccActual360, startDate6, endDate6) == 485.0/360.0
+    doAssert: yearFraction(dccActual365F, startDate6, endDate6) == 485.0/365.0
+    doAssert: yearFraction(dccActual365L, startDate6, endDate6) == 485.0/365.0 
+    doAssert: yearFraction(dccActual365A, startDate6, endDate6) == 485.0/366.0
+    doAssert: yearFraction(dccNL365, startDate6, endDate6) == 484.0/365.0
+    doAssert: yearFraction(dccActualActual, startDate6, endDate6) == 335.0/366.0+150.0/365.0
+
+    # "Actual/Actual AFB" day count method
+    # ------------------------------------
+    # (https://en.wikipedia.org/wiki/Day_count_convention#Actual/Actual_AFB)
+    let startDate7 = dateTime(2004, mFeb, 28)
+    let endDate7 = dateTime(2008, mFeb, 27)
+    let endDate7bis = dateTime(2008, mFeb, 28)
+    let endDate7ter = dateTime(2008, mFeb, 29)
+    let startDate8 = dateTime(1994, mFeb, 10)
+    let endDate8 = dateTime(1997, mJun, 30)
+
+    doAssert: yearFraction(dccActualActualAFB, startDate7, endDate7) == 3.0+365.0/366.0
+    doAssert: yearFraction(dccActualActualAFB, startDate7, endDate7bis) == 4.0
+    doAssert: yearFraction(dccActualActualAFB, startDate7, endDate7ter) == 4.0+1.0/366.0
+    doAssert: yearFraction(dccActualActualAFB, startDate8, endDate8) == 3.0+140.0/365.0
+
+  if endDate < startDate:
+    return  (-yearFraction(dcc, endDate, startDate, endDateIncl, startDateIncl, calendar))
+
+  let y1 = startDate.year
+  let m1 = startDate.month.ord
+  let d1 = startDate.monthday
+  let y2 = endDate.year
+  let m2 = endDate.month.ord
+  let d2 = endDate.monthday
+
+  case dcc
+    of dccThirtyA360:  
+      let nd1 = (if d1 == 31:  30  else:  d1)  # new d1
+      let nd2 = (if nd1 == 30 and d2 == 31:  30  else:  d2)  # new d2
+      return  yearFraction360(y1=y1, m1=m1, d1=nd1, y2=y2, m2=m2, d2=nd2)
+
+    of dccThirtyU360:  
+      var nd2 = (if endDate.isLastDayOfFebruary and startDate.isLastDayOfFebruary:  30 
+                 else:  d2)  # new d2
+      var nd1 = (if startDate.isLastDayOfFebruary:  30
+                 else:  d1)  # new d1
+      if nd2 == 31 and nd1 in {30,31}:  nd2 = 30
+      if nd1 == 31:  nd1 = 30
+      return  yearFraction360(y1=y1, m1=m1, d1=nd1, y2=y2, m2=m2, d2=nd2)
+
+    of dccThirtyE360:  
+      let nd1 = (if d1 == 31:  30  else:  d1)  # new d1
+      let nd2 = (if d2 == 31:  30  else:  d2)  # new d2
+      return  yearFraction360(y1=y1, m1=m1, d1=nd1, y2=y2, m2=m2, d2=nd2)
+
+    of dccThirtyEPlus360:  
+      let nd1 = (if d1 == 31:  30  else:  d1)  # new d1
+      let ndt2 = 
+        ( if d2 == 31:  
+            let dt3 = dateTime(y2, endDate.month, d2, zone=endDate.timeZone) + 1.days
+            dt3
+          else:
+            endDate
+        )
+      return  yearFraction360(y1=y1, m1=m1, d1=nd1, y2=ndt2.year, 
+                              m2=ndt2.month.ord, d2=ndt2.monthday)
+
+    of dccThirtyG360:  
+      let nd1 = (if d1 == 31 or startDate.isLastDayOfFebruary:  30  else:  d1)  # new d1
+      let nd2 = (if d2 == 31 or endDate.isLastDayOfFebruary:  30  else:  d2)  # new d2
+      return  yearFraction360(y1=y1, m1=m1, d1=nd1, y2=y2, m2=m2, d2=nd2)
+
+    of dccActual360:  
+      return  diffDays(endDate, startDate).float64 / 360.0
+
+    of dccActual365F:  
+      return  diffDays(endDate, startDate).float64 / 365.0
+
+    of dccActual366:  
+      return  diffDays(endDate, startDate).float64 / 366.0
+
+    of dccActual364:  
+      return  diffDays(endDate, startDate).float64 / 364.0
+
+    of dccActual36525:  
+      return  diffDays(endDate, startDate).float64 / 365.25
+
+    of dccActual365L:
+      let denominateur = (if endDate.year.isLeapYear:  366.0  else:  365.0)
+      return  diffDays(endDate, startDate).float64 / denominateur
+
+    of dccActual365A, dccNL365:
+      # the period [startDate; endDate] is entirely included in the  
+      # same year n else it starts in year n and ends in year n+1
+      doAssert: y2 == y1 or y2 == y1+1
+      let numerator = diffDays(endDate, startDate).float64
+      if not startDate.year.isLeapYear and not endDate.year.isLeapYear:
+        return numerator/365.0
+      let twentyNineFeb = block:
+        var twentyNineFeb: DateTime
+        if startDate.year.isLeapYear:
+          twentyNineFeb = dateTime(y1, mFeb, 29, zone=startDate.timeZone)
+        elif endDate.year.isLeapYear:
+          twentyNineFeb = dateTime(y2, mFeb, 29, zone=endDate.timeZone)
+        else:
+          notSupposedToGetHere()
+        twentyNineFeb
+      if startDate < twentyNineFeb and twentyNineFeb <= endDate:
+        if dcc == dccActual365A:  return numerator/366.0
+        elif dcc == dccNL365:  return (numerator-1.0)/365.0
+        else:  notSupposedToGetHere()
+      else:
+        return numerator/365.0
+
+    of dccActualActual:  
+      if y1 == y2:
+        if y1.isLeapYear:  return diffDays(endDate, startDate).float64/366.0
+        else:  return diffDays(endDate, startDate).float64/365.0
+      else:
+        let dt3 = dateTime(y1+1, mJan, 1, zone=startDate.timeZone)
+        let dt4 = dateTime(y2, mJan, 1, zone=endDate.timeZone)
+        let denominator1 =
+          if y1.isLeapYear:  366.0
+          else:  365.0
+        let denominator2 =
+          if y2.isLeapYear:  366.0
+          else:  365.0
+        return diffDays(dt3, startDate).float64/denominator1 + float64(y2-y1-1) + 
+                 diffDays(endDate, dt4).float64/denominator2
+
+    of dccActualActualAFB:  
+      let dt3 = startDate + 1.years
+      if endDate < dt3:
+        return yearFraction(dccActual365L, startDate, endDate, ynYes, ynYes, calendar)
+      else:
+        let dt3 = endDate - (y2-y1).years
+        return  float64(y2-y1) + yearFraction(dccActual365L, startDate, dt3, ynYes, ynYes, calendar)
+
+    of dccBusinessDays252:
+      doAssert: not calendar.isNil
+      let bdayscount = calendar.bdays(startDate, endDate, startDateIncl, endDateIncl).len
+      if bdayscount in {1,0}:  return 0.0
+      else:  return  (bdayscount-1).float64 / 252.0
+
+    of dccOneOne:
+      return 1.0

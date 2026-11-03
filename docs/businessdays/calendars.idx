@@ -1,0 +1,45 @@
+nimTitle	calendars	businessdays/calendars.html	module src/businessdays/calendars		0
+nim	bdCalendar	businessdays/calendars.html#bdCalendar	type bdCalendar		21
+nim	klndrNoHolidayOrWeekend	businessdays/calendars.html#klndrNoHolidayOrWeekend	bdCalendarId.klndrNoHolidayOrWeekend		25
+nim	klndrWeekendsOnlyInTheWest	businessdays/calendars.html#klndrWeekendsOnlyInTheWest	bdCalendarId.klndrWeekendsOnlyInTheWest		25
+nim	klndrTARGET	businessdays/calendars.html#klndrTARGET	bdCalendarId.klndrTARGET		25
+nim	klndrUSFederalGovt	businessdays/calendars.html#klndrUSFederalGovt	bdCalendarId.klndrUSFederalGovt		25
+nim	klndrUSBondMarket	businessdays/calendars.html#klndrUSBondMarket	bdCalendarId.klndrUSBondMarket		25
+nim	klndrUSNYSE	businessdays/calendars.html#klndrUSNYSE	bdCalendarId.klndrUSNYSE		25
+nim	klndrUKEngland	businessdays/calendars.html#klndrUKEngland	bdCalendarId.klndrUKEngland		25
+nim	klndrUKScotland	businessdays/calendars.html#klndrUKScotland	bdCalendarId.klndrUKScotland		25
+nim	klndrUKNorthenIreland	businessdays/calendars.html#klndrUKNorthenIreland	bdCalendarId.klndrUKNorthenIreland		25
+nim	bdCalendarId	businessdays/calendars.html#bdCalendarId	enum bdCalendarId		25
+nim	bdcFollowing	businessdays/calendars.html#bdcFollowing	bdBusinessDayConvention.bdcFollowing		37
+nim	bdcPredecing	businessdays/calendars.html#bdcPredecing	bdBusinessDayConvention.bdcPredecing		37
+nim	bdcModifFollowing	businessdays/calendars.html#bdcModifFollowing	bdBusinessDayConvention.bdcModifFollowing		37
+nim	bdcModifFollowingFornight	businessdays/calendars.html#bdcModifFollowingFornight	bdBusinessDayConvention.bdcModifFollowingFornight		37
+nim	bdcEndOfMonth	businessdays/calendars.html#bdcEndOfMonth	bdBusinessDayConvention.bdcEndOfMonth		37
+nim	bdBusinessDayConvention	businessdays/calendars.html#bdBusinessDayConvention	enum bdBusinessDayConvention		37
+nim	`$`	businessdays/calendars.html#$.e,bdCalendar	method `$`(calendar: bdCalendar): string		49
+nim	isweekend	businessdays/calendars.html#isweekend,bdCalendarId,DateTime	proc isweekend(calendar: bdCalendarId; dt: DateTime): bool		54
+nim	isweekend	businessdays/calendars.html#isweekend.e,bdCalendar,DateTime	method isweekend(calendar: bdCalendar; dt: DateTime): bool		69
+nim	isholiday	businessdays/calendars.html#isholiday,bdCalendarId,DateTime	proc isholiday(calendar: bdCalendarId; dt: DateTime): bool		78
+nim	isholiday	businessdays/calendars.html#isholiday.e,bdCalendar,DateTime	method isholiday(calendar: bdCalendar; dt: DateTime): bool		99
+nim	holidays	businessdays/calendars.html#holidays,bdCalendarId,DateTime,DateTime	proc holidays(calendar: bdCalendarId; fromDate, toDate: DateTime;\n         ignoreWeekend = false): seq[DateTime]		127
+nim	holidays	businessdays/calendars.html#holidays.e,bdCalendar,DateTime,DateTime	method holidays(calendar: bdCalendar; fromDate, toDate: DateTime; ignoreWeekend = false): seq[\n    DateTime]		142
+nim	holidays	businessdays/calendars.html#holidays.t,T,int,Month	template holidays[T: bdCalendar | bdCalendarId](calendar: T; year: int; month: Month;\n                                       ignoreWeekend = false): seq[DateTime]		152
+nim	holidays	businessdays/calendars.html#holidays.t,T,int	template holidays[T: bdCalendar | bdCalendarId](calendar: T; year: int;\n                                       ignoreWeekend = false): seq[DateTime]		170
+nim	isbday	businessdays/calendars.html#isbday,bdCalendarId,DateTime	proc isbday(calendar: bdCalendarId; dt: DateTime): bool		195
+nim	isbday	businessdays/calendars.html#isbday.e,bdCalendar,DateTime	method isbday(calendar: bdCalendar; dt: DateTime): bool		212
+nim	info	businessdays/calendars.html#info,T,DateTime	proc info[T: bdCalendar | bdCalendarId](calendar: T; dt: DateTime): string		223
+nim	nextbday	businessdays/calendars.html#nextbday,bdCalendarId,DateTime	proc nextbday(calendar: bdCalendarId; dt: DateTime; forward = true;\n         searchIntervalLength = 60.Natural; startSearchOnDt = false): ?DateTime		253
+nim	nextbday	businessdays/calendars.html#nextbday.e,bdCalendar,DateTime	method nextbday(calendar: bdCalendar; dt: DateTime; forward = true;\n         searchIntervalLength = 60.Natural; startSearchOnDt = false): ?DateTime		289
+nim	nextbday	businessdays/calendars.html#nextbday,seq[DateTime],DateTime	proc nextbday(bizdays: seq[DateTime]; dt: DateTime; forward = true;\n         startSearchOnDt = false): ?DateTime		301
+nim	bdays	businessdays/calendars.html#bdays,bdCalendarId,DateTime,DateTime	proc bdays(calendar: bdCalendarId; fromDate, toDate: DateTime; fromDateIncl = ynYes;\n      toDateIncl = ynYes): seq[DateTime]		409
+nim	bdays	businessdays/calendars.html#bdays.e,bdCalendar,DateTime,DateTime	method bdays(calendar: bdCalendar; fromDate, toDate: DateTime; fromDateIncl = ynYes;\n      toDateIncl = ynYes): seq[DateTime]		452
+nim	bdays	businessdays/calendars.html#bdays,seq[DateTime],DateTime,DateTime	proc bdays(bizdays: seq[DateTime]; fromDate, toDate: DateTime; fromDateIncl = ynYes;\n      toDateIncl = ynYes): seq[DateTime]		463
+nim	bday	businessdays/calendars.html#bday,bdCalendarId,bdBusinessDayConvention,DateTime	proc bday(calendar: bdCalendarId; bdayConv: bdBusinessDayConvention; dt: DateTime;\n     startSearchOnDt = true; searchIntervalLength = 60.Natural): ?DateTime		551
+nim	bday	businessdays/calendars.html#bday.e,bdCalendar,bdBusinessDayConvention,DateTime	method bday(calendar: bdCalendar; bdayConv: bdBusinessDayConvention; dt: DateTime;\n     startSearchOnDt = true; searchIntervalLength = 60.Natural): ?DateTime		605
+nim	addbdays	businessdays/calendars.html#addbdays,bdCalendarId,DateTime,int64	proc addbdays(calendar: bdCalendarId; dt: DateTime; nbdays: int64;\n         startCountOnDt = false): ?DateTime		636
+nim	addbdays	businessdays/calendars.html#addbdays.e,bdCalendar,DateTime,int64	method addbdays(calendar: bdCalendar; dt: DateTime; nbdays: int64;\n         startCountOnDt = false): ?DateTime		668
+nim	addbdays	businessdays/calendars.html#addbdays,seq[DateTime],DateTime,int64	proc addbdays(bizdays: seq[DateTime]; dt: DateTime; nbdays: int64;\n         startCountOnDt = false): ?DateTime		684
+nimgrp	nextbday	businessdays/calendars.html#nextbday-procs-all	proc		253
+nimgrp	addbdays	businessdays/calendars.html#addbdays-procs-all	proc		636
+nimgrp	bdays	businessdays/calendars.html#bdays-procs-all	proc		409
+nimgrp	holidays	businessdays/calendars.html#holidays-templates-all	template		152

@@ -48,13 +48,14 @@ and start using it:
 let calendar = bdCalendarId.klndrUSNYSE  # New York Stock Exchange (NYSE) calendar
 
 # some arbitrary dates
-let dt0 = dateTime(2014, mDec, 31)   # Wednesday  
-let dt1 = dateTime(2015, mJan, 1)    # Thursday  
-let dt2 = dateTime(2015, mJan, 2)    # Friday  
-let dt3 = dateTime(2015, mJan, 3)    # Saturday  
-let dt4 = dateTime(2015, mJan, 4)    # Sunday
-let dt5 = dateTime(2015, mJan, 5)    # Monday  
-let dt6 = dateTime(2015, mJan, 6)    # Tuesday
+let 
+  dt0 = dateTime(2014, mDec, 31)  # Wednesday  
+  dt1 = dateTime(2015, mJan, 1)   # Thursday  
+  dt2 = dateTime(2015, mJan, 2)   # Friday  
+  dt3 = dateTime(2015, mJan, 3)   # Saturday 
+  #dt4 = dateTime(2015, mJan, 4)  # Sunday  ('dt4' is not used here)
+  dt5 = dateTime(2015, mJan, 5)   # Monday  
+  dt6 = dateTime(2015, mJan, 6)   # Tuesday
 
 # 'dt1' (resp. 'dt2', 'dt3') is a holiday (resp. business day, weekend)
 doAssert:  calendar.isholiday(dt1) 
@@ -76,20 +77,20 @@ doAssert:  !calendar.nextbday(dt1, forward = false) ==~ dt0
 doAssert:  !calendar.addbdays(dt0, 1) ==~ dt2
 doAssert:  !calendar.addbdays(dt0, 2) ==~ dt5
 doAssert:  !calendar.addbdays(dt6, -3) ==~ dt0
-  
+ 
 # business day conventions are supported
-let dt11 = dateTime(2011, mApr, 29)  # Friday
-let dt12 = dateTime(2012, mMar, 28)  # Wednesday
-let dt13 = dateTime(2012, mMar, 30)  # Friday
+let 
+  dt11 = dateTime(2011, mApr, 29)  # Friday
+  dt12 = dateTime(2012, mMar, 28)  # Wednesday
+  dt13 = dateTime(2012, mMar, 30)  # Friday
 # 'bdcEndOfMonth' is an item of the 'bdBusinessDayConvention' enumeration
 doAssert:  !calendar.bday(bdcEndOfMonth, dt11) ==~ dt11
 doAssert:  !calendar.bday(bdcEndOfMonth, dt12) ==~ dt13
  
-# business days between two dates (the 'dateInterval' parameter 
-# allows you to include or exclude 'fromDate' or 'toDate')
-let bizDays = calendar.bdays(fromDate = dt0, toDate = dt6, dateInterval = BoundedClosed)
+# business days between two dates
+let bizDays = calendar.bdays(fromDate = dt0, toDate = dt6)
 doAssert:  bizdays == @[dt0, dt2, dt5, dt6]
-
+  
 # 2 public holidays observed in January 2024
 doAssert: calendar.holidays(2024, mJan) == @[
   dateTime(2024, mJan, 1),   # New Year's day
@@ -111,19 +112,19 @@ doAssert: calendar.holidays(2025) == @[
 # to speed up subsequent calculations, business days can 
 # be stored in a sequence that can be reused several times
 let bizDaysNYSE2025 = calendar.bdays(fromDate = dateTime(2025, mJan, 1), 
-      toDate = dateTime(2025, mDec, 31), dateInterval = BoundedClosed)
+      toDate = dateTime(2025, mDec, 31))
 # 365 calendar days - 104 weekends - 10 observed holidays  =  251 business days
 doAssert:  bizDaysNYSE2025.len == 251
-
+ 
 # some calculations with the above sequence
 let dt250117 = dateTime(2025, mJan, 17)  # Friday
 # January 18-19:  weekend
-# January 20, 2025:  Birthday of Martin Luther King (holiday)
+# January 20:  Birthday of Martin Luther King (holiday)
 let dt250121 = dateTime(2025, mJan, 21)  # Tuesday (business day)
 let dt250122 = dateTime(2025, mJan, 22)  # Wednesday (business day)
 doAssert:  !bizDaysNYSE2025.nextbday(dt250117) ==~ dt250121 
 doAssert:  !bizDaysNYSE2025.addbdays(dt250121, -1) ==~ dt250117
-doAssert:  !bizDaysNYSE2025.addbdays(dt250117, 2) ==~ dt250122  
+doAssert:  !bizDaysNYSE2025.addbdays(dt250117, 2) ==~ dt250122    
 ```
 
 The reader is encouraged to consult the module documentation 
@@ -137,21 +138,20 @@ Similar modules have been developed in other programming languages:
   - [bizdays](https://cran.r-project.org/web/packages/bizdays/index.html)
 
 
-## BusinessDays.jl vs. businessdays.nim
+## businessdays.nim vs. BusinessDays.jl
 
-The time it takes to generate the holiday calendar for the US bond market 
-from 2015 to 2100 is comparable (approximately 0.2 seconds).
+The time it takes to generate the holiday calendar for 
+the US Bond Market from 2015 to 2100 is comparable 
+(approximately 0.2 seconds).
 
-The holiday dates also coincide, with the exception of Veterans Day 
-when November 11 falls on a Saturday. In this case, the Julia package 
-lists Friday, November 10, as a holiday, even though no holiday should 
-be included.
+The holiday dates also coincide, with the exception 
+of Veterans Day when November 11 falls on a Saturday. 
+In this case, the Julia package lists Friday, November 10, 
+as a holiday, even though no holiday should be included.
 
-For example, the Julia package lists November 10, 2017, as a holiday, 
-even though it is not on the list of holidays available [here] 
-(https://www.sifma.org/resources/general/us-holiday-archive/).
-
-Currently, more calendars are supported in `BusinessDay.jl` compared to `businessday.nim`.
+For example, the Julia package lists November 10, 2017, as a 
+holiday, even though it is not on the list of holidays available 
+[here] (https://www.sifma.org/resources/general/us-holiday-archive/).
 
 
 ## Documentation

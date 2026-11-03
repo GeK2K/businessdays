@@ -2,15 +2,18 @@
 ========
 daycount
 ========
+
 The `daycount` module allows you to calculate the duration between 
 two dates according to the calculation convention of your choice.
-The user is encouraged to see the `yearFraction` `proc` for more details.
+The user is encouraged to see the 
+`yearFraction <#yearFraction,DateTime,DateTime,bdDayCountConvention,bdCalendar,BoundedInterval>`_ 
+`proc` for more details.
 ]##
 
 
 # =========================     Imports / Exports     ======================== #
 
-import  calendars, nimutils/[nudates]
+import  calendars, nimutils/[nuconstants, nudates]
 export  calendars
 
 
@@ -109,7 +112,7 @@ type
 
 # =======================     Day count calculations    ====================== #
 
-func  yearFraction360(y1, m1, d1, y2, m2, d2: int): float64 {.inline.} =
+func yearFraction360(y1, m1, d1, y2, m2, d2: int): float64 {.inline.} =
   ## Calculates the duration between two dates when 
   ## the calculation convention is a 360 method.
   ## NO CHECK IS MADE ON THE VALUES OF THE PARAMETERS
@@ -119,20 +122,20 @@ func  yearFraction360(y1, m1, d1, y2, m2, d2: int): float64 {.inline.} =
   float64(360*(y2-y1)+30*(m2-m1)+(d2-d1)) / 360.0
  
 
-proc  yearFraction*(startDate, endDate: DateTime; dcc: bdDayCountConvention,
-                    calendar: bdCalendar = nil, 
-                    dateInterval: BoundedRealInterval = BoundedRightOpen): float64 =
+proc yearFraction*(dcc: bdDayCountConvention; startDate, endDate: DateTime; 
+                   startDateIncl = ynYes, endDateIncl = ynYes, calendar: bdCalendar = nil): float64 =
   ##[
   Calculates the duration between the starting date `<startDate>` and 
   the end date `<endDate>`, according to the day count convention `<dcc>`.
   
   **Notes:**
     - If `endDate < startDate` the result is equal to
-      `-yearFraction(startDate = endDate, endDate = startDate, dcc, calendar, dateInterval)`.
-    - `calendar` and `dateInterval` parameters are 
+      `-yearFraction(dcc, startDate = endDate, endDate = startDate, startDateIncl = endDateIncl, 
+      endDateIncl = startDateIncl, calendar)`.
+    -  `startDateIncl`,  `endDateIncl` and `calendar` parameters are 
       only use when `dcc == dccBusinessDays252`.
-    - The `dateInterval` parameter allows you to include/exclude 
-      `<fromDate>` and `<toDate>` for business day counting. 
+    - The `startDateIncl` and `endDateIncl` parameters allow you to include/exclude 
+      `<startDate>` and `<endDate>` for business day counting. 
 
   **Main references:**
     - http://deltaquants.com/day-count-conventions
@@ -145,13 +148,13 @@ proc  yearFraction*(startDate, endDate: DateTime; dcc: bdDayCountConvention,
     # --------------------------------------------------------------------------
     let startDate1 = dateTime(2008, mJan, 31)
     let endDate1 = dateTime(2008, mFeb, 28)
-
-    doAssert: yearFraction(startDate1, endDate1, dccActual360) == 28.0/360.0
-    doAssert: yearFraction(startDate1, endDate1, dccThirtyA360) == 28.0/360.0
-    doAssert: yearFraction(startDate1, endDate1, dccThirtyU360) == 28.0/360.0
-    doAssert: yearFraction(startDate1, endDate1, dccThirtyE360) == 28.0/360.0
-    doAssert: yearFraction(startDate1, endDate1, dccThirtyEPlus360) == 28.0/360.0
-    doAssert: yearFraction(startDate1, endDate1, dccThirtyG360) == 28.0/360.0
+ 
+    doAssert: yearFraction(dccActual360, startDate1, endDate1) == 28.0/360.0
+    doAssert: yearFraction(dccThirtyA360, startDate1, endDate1) == 28.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate1, endDate1) == 28.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate1, endDate1) == 28.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate1, endDate1) == 28.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate1, endDate1) == 28.0/360.0
 
     # Day count is 28.0 for all considered day count conventions.
 
@@ -160,12 +163,12 @@ proc  yearFraction*(startDate, endDate: DateTime; dcc: bdDayCountConvention,
     let startDate2 = dateTime(2007, mFeb, 28)
     let endDate2 = dateTime(2007, mMar, 31)
 
-    doAssert: yearFraction(startDate2, endDate2, dccActual360) == 31.0/360.0
-    doAssert: yearFraction(startDate2, endDate2, dccThirtyA360) == 33.0/360.0
-    doAssert: yearFraction(startDate2, endDate2, dccThirtyU360) == 30.0/360.0
-    doAssert: yearFraction(startDate2, endDate2, dccThirtyE360) == 32.0/360.0
-    doAssert: yearFraction(startDate2, endDate2, dccThirtyEPlus360) == 33.0/360.0
-    doAssert: yearFraction(startDate2, endDate2, dccThirtyG360) == 30.0/360.0
+    doAssert: yearFraction(dccActual360, startDate2, endDate2) == 31.0/360.0
+    doAssert: yearFraction(dccThirtyA360, startDate2, endDate2) == 33.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate2, endDate2) == 30.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate2, endDate2) == 32.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate2, endDate2) == 33.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate2, endDate2) == 30.0/360.0
 
     # - Depending on the considered day count convention, 
     #   the day count varies from 30.0 to 33.0 (4 values).
@@ -184,68 +187,68 @@ proc  yearFraction*(startDate, endDate: DateTime; dcc: bdDayCountConvention,
     let startDate3 = dateTime(2007, mDec, 28)
     let endDate3 = dateTime(2008, mFeb, 28)
 
-    doAssert: yearFraction(startDate3, endDate3, dccThirtyA360) == 60.0/360.0
-    doAssert: yearFraction(startDate3, endDate3, dccThirtyU360) == 60.0/360.0
-    doAssert: yearFraction(startDate3, endDate3, dccThirtyE360) == 60.0/360.0
-    doAssert: yearFraction(startDate3, endDate3, dccThirtyEPlus360) == 60.0/360.0
-    doAssert: yearFraction(startDate3, endDate3, dccThirtyG360) == 60.0/360.0
-    doAssert: yearFraction(startDate3, endDate3, dccActual360) == 62.0/360.0
-    doAssert: yearFraction(startDate3, endDate3, dccActual365F) == 62.0/365.0
-    doAssert: yearFraction(startDate3, endDate3, dccActual365L) == 62.0/366.0
-    doAssert: yearFraction(startDate3, endDate3, dccActual365A) == 62.0/365.0
-    doAssert: yearFraction(startDate3, endDate3, dccNL365) == 62.0/365.0
-    doAssert: yearFraction(startDate3, endDate3, dccActualActual) == 4.0/365.0+58.0/366.0
+    doAssert: yearFraction(dccThirtyA360, startDate3, endDate3) == 60.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate3, endDate3) == 60.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate3, endDate3) == 60.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate3, endDate3) == 60.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate3, endDate3) == 60.0/360.0
+    doAssert: yearFraction(dccActual360, startDate3, endDate3) == 62.0/360.0
+    doAssert: yearFraction(dccActual365F, startDate3, endDate3) == 62.0/365.0
+    doAssert: yearFraction(dccActual365L, startDate3, endDate3) == 62.0/366.0
+    doAssert: yearFraction(dccActual365A, startDate3, endDate3) == 62.0/365.0
+    doAssert: yearFraction(dccNL365, startDate3, endDate3) == 62.0/365.0
+    doAssert: yearFraction(dccActualActual, startDate3, endDate3) == 4.0/365.0+58.0/366.0
 
     # Time interval 4:  from  28 December 2007  to  29 February 2008
     # --------------------------------------------------------------
     let startDate4 = dateTime(2007, mDec, 28)
     let endDate4 = dateTime(2008, mFeb, 29)
 
-    doAssert: yearFraction(startDate4, endDate4, dccThirtyA360) == 61.0/360.0
-    doAssert: yearFraction(startDate4, endDate4, dccThirtyU360) == 61.0/360.0
-    doAssert: yearFraction(startDate4, endDate4, dccThirtyE360) == 61.0/360.0
-    doAssert: yearFraction(startDate4, endDate4, dccThirtyEPlus360) == 61.0/360.0
-    doAssert: yearFraction(startDate4, endDate4, dccThirtyG360) == 62.0/360.0
-    doAssert: yearFraction(startDate4, endDate4, dccActual360) == 63.0/360.0
-    doAssert: yearFraction(startDate4, endDate4, dccActual365F) == 63.0/365.0
-    doAssert: yearFraction(startDate4, endDate4, dccActual365L) == 63.0/366.0
-    doAssert: yearFraction(startDate4, endDate4, dccActual365A) == 63.0/366.0
-    doAssert: yearFraction(startDate4, endDate4, dccNL365) == 62.0/365.0
-    doAssert: yearFraction(startDate4, endDate4, dccActualActual) == 4.0/365.0+59.0/366.0
+    doAssert: yearFraction(dccThirtyA360, startDate4, endDate4) == 61.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate4, endDate4) == 61.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate4, endDate4) == 61.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate4, endDate4) == 61.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate4, endDate4) == 62.0/360.0
+    doAssert: yearFraction(dccActual360, startDate4, endDate4) == 63.0/360.0
+    doAssert: yearFraction(dccActual365F, startDate4, endDate4) == 63.0/365.0
+    doAssert: yearFraction(dccActual365L, startDate4, endDate4) == 63.0/366.0
+    doAssert: yearFraction(dccActual365A, startDate4, endDate4) == 63.0/366.0
+    doAssert: yearFraction(dccNL365, startDate4, endDate4) == 62.0/365.0
+    doAssert: yearFraction(dccActualActual, startDate4, endDate4) == 4.0/365.0+59.0/366.0
 
     # Time interval 5:  from  31 October 2007  to  30 November 2008
     # --------------------------------------------------------------
     let startDate5 = dateTime(2007, mOct, 31)
     let endDate5 = dateTime(2008, mNov, 30)
 
-    doAssert: yearFraction(startDate5, endDate5, dccThirtyA360) == 390.0/360.0
-    doAssert: yearFraction(startDate5, endDate5, dccThirtyU360) == 390.0/360.0
-    doAssert: yearFraction(startDate5, endDate5, dccThirtyE360) == 390.0/360.0
-    doAssert: yearFraction(startDate5, endDate5, dccThirtyEPlus360) == 390.0/360.0
-    doAssert: yearFraction(startDate5, endDate5, dccThirtyG360) == 390.0/360.0
-    doAssert: yearFraction(startDate5, endDate5, dccActual360) == 396.0/360.0
-    doAssert: yearFraction(startDate5, endDate5, dccActual365F) == 396.0/365.0
-    doAssert: yearFraction(startDate5, endDate5, dccActual365L) == 396.0/366.0
-    doAssert: yearFraction(startDate5, endDate5, dccActual365A) == 396.0/366.0
-    doAssert: yearFraction(startDate5, endDate5, dccNL365) == 395.0/365.0
-    doAssert: yearFraction(startDate5, endDate5, dccActualActual) == 62.0/365.0+334.0/366.0
+    doAssert: yearFraction(dccThirtyA360, startDate5, endDate5) == 390.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate5, endDate5) == 390.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate5, endDate5) == 390.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate5, endDate5) == 390.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate5, endDate5) == 390.0/360.0
+    doAssert: yearFraction(dccActual360, startDate5, endDate5) == 396.0/360.0
+    doAssert: yearFraction(dccActual365F, startDate5, endDate5) == 396.0/365.0
+    doAssert: yearFraction(dccActual365L, startDate5, endDate5) == 396.0/366.0
+    doAssert: yearFraction(dccActual365A, startDate5, endDate5) == 396.0/366.0
+    doAssert: yearFraction(dccNL365, startDate5, endDate5) == 395.0/365.0
+    doAssert: yearFraction(dccActualActual, startDate5, endDate5) == 62.0/365.0+334.0/366.0
 
     # Time interval 6:  from  1 February 2008  to  31 May 2009
     # --------------------------------------------------------
     let startDate6 = dateTime(2008, mFeb, 1)
     let endDate6 = dateTime(2009, mMay, 31)
 
-    doAssert: yearFraction(startDate6, endDate6, dccThirtyA360) == 480.0/360.0
-    doAssert: yearFraction(startDate6, endDate6, dccThirtyU360) == 480.0/360.0
-    doAssert: yearFraction(startDate6, endDate6, dccThirtyE360) == 479.0/360.0
-    doAssert: yearFraction(startDate6, endDate6, dccThirtyEPlus360) == 480.0/360.0
-    doAssert: yearFraction(startDate6, endDate6, dccThirtyG360) == 479.0/360.0
-    doAssert: yearFraction(startDate6, endDate6, dccActual360) == 485.0/360.0
-    doAssert: yearFraction(startDate6, endDate6, dccActual365F) == 485.0/365.0
-    doAssert: yearFraction(startDate6, endDate6, dccActual365L) == 485.0/365.0 
-    doAssert: yearFraction(startDate6, endDate6, dccActual365A) == 485.0/366.0
-    doAssert: yearFraction(startDate6, endDate6, dccNL365) == 484.0/365.0
-    doAssert: yearFraction(startDate6, endDate6, dccActualActual) == 335.0/366.0+150.0/365.0
+    doAssert: yearFraction(dccThirtyA360, startDate6, endDate6) == 480.0/360.0
+    doAssert: yearFraction(dccThirtyU360, startDate6, endDate6) == 480.0/360.0
+    doAssert: yearFraction(dccThirtyE360, startDate6, endDate6) == 479.0/360.0
+    doAssert: yearFraction(dccThirtyEPlus360, startDate6, endDate6) == 480.0/360.0
+    doAssert: yearFraction(dccThirtyG360, startDate6, endDate6) == 479.0/360.0
+    doAssert: yearFraction(dccActual360, startDate6, endDate6) == 485.0/360.0
+    doAssert: yearFraction(dccActual365F, startDate6, endDate6) == 485.0/365.0
+    doAssert: yearFraction(dccActual365L, startDate6, endDate6) == 485.0/365.0 
+    doAssert: yearFraction(dccActual365A, startDate6, endDate6) == 485.0/366.0
+    doAssert: yearFraction(dccNL365, startDate6, endDate6) == 484.0/365.0
+    doAssert: yearFraction(dccActualActual, startDate6, endDate6) == 335.0/366.0+150.0/365.0
 
     # "Actual/Actual AFB" day count method
     # ------------------------------------
@@ -257,14 +260,13 @@ proc  yearFraction*(startDate, endDate: DateTime; dcc: bdDayCountConvention,
     let startDate8 = dateTime(1994, mFeb, 10)
     let endDate8 = dateTime(1997, mJun, 30)
 
-    doAssert: yearFraction(startDate7, endDate7, dccActualActualAFB) == 3.0+365.0/366.0
-    doAssert: yearFraction(startDate7, endDate7bis, dccActualActualAFB) == 4.0
-    doAssert: yearFraction(startDate7, endDate7ter, dccActualActualAFB) == 4.0+1.0/366.0
-    doAssert: yearFraction(startDate8, endDate8, dccActualActualAFB) == 3.0+140.0/365.0
-  
+    doAssert: yearFraction(dccActualActualAFB, startDate7, endDate7) == 3.0+365.0/366.0
+    doAssert: yearFraction(dccActualActualAFB, startDate7, endDate7bis) == 4.0
+    doAssert: yearFraction(dccActualActualAFB, startDate7, endDate7ter) == 4.0+1.0/366.0
+    doAssert: yearFraction(dccActualActualAFB, startDate8, endDate8) == 3.0+140.0/365.0
+
   if endDate < startDate:
-    return  (-yearFraction(startDate = endDate, endDate = startDate, 
-                           dcc, calendar, dateInterval))
+    return  (-yearFraction(dcc, endDate, startDate, endDateIncl, startDateIncl, calendar))
 
   let y1 = startDate.year
   let m1 = startDate.month.ord
@@ -343,12 +345,12 @@ proc  yearFraction*(startDate, endDate: DateTime; dcc: bdDayCountConvention,
         elif endDate.year.isLeapYear:
           twentyNineFeb = dateTime(y2, mFeb, 29, zone=endDate.timeZone)
         else:
-          doAssert: false # we're not supposed to get here
+          notSupposedToGetHere()
         twentyNineFeb
       if startDate < twentyNineFeb and twentyNineFeb <= endDate:
         if dcc == dccActual365A:  return numerator/366.0
         elif dcc == dccNL365:  return (numerator-1.0)/365.0
-        else:  doAssert: false # we're not supposed to get here
+        else:  notSupposedToGetHere()
       else:
         return numerator/365.0
 
@@ -371,14 +373,14 @@ proc  yearFraction*(startDate, endDate: DateTime; dcc: bdDayCountConvention,
     of dccActualActualAFB:  
       let dt3 = startDate + 1.years
       if endDate < dt3:
-        return yearFraction(startDate, endDate, dccActual365L)
+        return yearFraction(dccActual365L, startDate, endDate, ynYes, ynYes, calendar)
       else:
         let dt3 = endDate - (y2-y1).years
-        return  float64(y2-y1) + yearFraction(startDate, dt3, dccActual365L)
+        return  float64(y2-y1) + yearFraction(dccActual365L, startDate, dt3, ynYes, ynYes, calendar)
 
     of dccBusinessDays252:
       doAssert: not calendar.isNil
-      let bdayscount = calendar.bdays(startDate, endDate, dateInterval).len
+      let bdayscount = calendar.bdays(startDate, endDate, startDateIncl, endDateIncl).len
       if bdayscount in {1,0}:  return 0.0
       else:  return  (bdayscount-1).float64 / 252.0
 

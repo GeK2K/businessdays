@@ -1,3 +1,0 @@
-nimTitle	holidays_target	businessdays/calendars/holidays/holidays_target.html	module src/businessdays/calendars/holidays/holidays_target		0
-nim	isholidayTARGET	businessdays/calendars/holidays/holidays_target.html#isholidayTARGET,DateTime	proc isholidayTARGET(dt: DateTime): bool		32
-nim	isbdayTARGET	businessdays/calendars/holidays/holidays_target.html#isbdayTARGET,DateTime	proc isbdayTARGET(dt: DateTime): bool		81

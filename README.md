@@ -140,6 +140,12 @@ Similar modules have been developed in other programming languages:
 
 ## businessdays.nim vs. BusinessDays.jl
 
+Currently, more calendars are supported in 
+`BusinessDays.jl` compared to `businessdays.nim`.
+
+Among the calendars implemented in `businessdays.nim` are 
+those of the NYSE, US Bond Market and US Federal Government.
+
 The time it takes to generate the holiday calendar for 
 the US Bond Market from 2015 to 2100 is comparable 
 (approximately 0.2 seconds).
@@ -152,6 +158,8 @@ as a holiday, even though no holiday should be included.
 For example, the Julia package lists November 10, 2017, as a 
 holiday, even though it is not on the list of holidays available 
 [here] (https://www.sifma.org/resources/general/us-holiday-archive/).
+We have sent a [message] (https://github.com/JuliaFinance/BusinessDays.jl/issues/77) 
+regarding this issue to the package authors.
 
 
 ## Documentation
